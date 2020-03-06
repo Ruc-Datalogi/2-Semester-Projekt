@@ -11,12 +11,12 @@ public class Core extends PApplet{
 
     public void settings() {
         size(1200, 720);
-        frameRate(60);
     }
 
     public void draw(){
+        background(0);
         rect(50,50,50,50);
+        text(frameRate,20,20); //this is the frameRate counter
+
     }
-
-
 }
