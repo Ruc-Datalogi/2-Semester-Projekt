@@ -1,5 +1,5 @@
 import processing.core.PVector;
-
+import processing.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -31,5 +31,9 @@ public class Vertex {
      */
     void addEdgeVertex(Vertex vertex){
         this.edgeVertices.add(vertex);
+    }
+
+    void display(){
+        ellipse(position.x, position.y,20,20);
     }
 }

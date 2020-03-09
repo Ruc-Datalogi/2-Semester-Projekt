@@ -15,7 +15,7 @@ public class Graph {
     /*
     A list of all the vertices bordering this vertex
      */
-    public HashMap<Vertex, ArrayList<Vertex>> edgeVertices;
+    public HashMap<Vertex , ArrayList<Vertex>> edgeVertices;
 
     /*
         The graph class should contain all nodes for a graph
@@ -38,10 +38,4 @@ public class Graph {
     void addVertex(Vertex vertex){
         this.vertices.add(vertex);
     }
-
-    void init(){
-
-    }
-
-
 }
