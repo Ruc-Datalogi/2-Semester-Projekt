@@ -17,7 +17,7 @@ public class Vertex {
      * @param st start-time
      * @param et end-time
      * @param d demand
-     * @param mt mean time, or how long it takes to complete this task.
+     * @param mt mean-time, or how long it takes to complete this task.
      */
     Vertex(PVector xy, int st, int et, int d, int mt){
         position = xy;
