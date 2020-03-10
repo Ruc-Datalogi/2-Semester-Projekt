@@ -53,6 +53,7 @@ public class DataGirl {
             System.out.println(xy);
         }
         //debating removing this
+        tempVertexArrayList.get(1).setDepot();
         vertexArrayList = tempVertexArrayList;
         return tempVertexArrayList;
     }

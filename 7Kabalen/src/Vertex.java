@@ -33,11 +33,25 @@ public class Vertex {
     }
 
     void display(){
+        //if vertex is depot display as red
+        if(isDepot){
+            parent.fill(255,0,0);
+            parent.text("pos x " + position.x + " " + "pos y " + position.y, position.x*10-20,position.y*10-5);
+        } else {
+            parent.fill(0,255,0);
+            parent.text("pos x " + position.x +" " + "pos y " + position.y, position.x*10-20,position.y*10-5);
+        }
+
         parent.fill(255);
         parent.ellipse(position.x*10, position.y*10, 8, 8); //the multiplier basically just spreads them out
+
     }
 
     void setParent(PApplet p) {
         parent = p;
+    }
+
+    void setDepot(){
+        isDepot = true;
     }
 }

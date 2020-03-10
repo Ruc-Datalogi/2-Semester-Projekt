@@ -21,13 +21,19 @@ public class Core extends PApplet{
 
     }
 
-
     public void setup(){
 
-        DataGirl datagirl = new DataGirl("SOLOMON2.csv");
+        //setup of the data handler and generation of the solomon data.
+        DataGirl datagirl = new DataGirl("SOLOMON2.csv"); //change what data you want to look at here.
         datagirl.setParent(this);
-        vertexArrayList = datagirl.generateVertice();
-        System.out.println(datagirl.generateVertice().size());
+
+        try {
+            vertexArrayList = datagirl.generateVertice();
+        } catch(Exception e) {
+            System.out.println("The data generation broke");
+        }
+
+        System.out.println("Size of your data set: " + datagirl.generateVertice().size());
         System.out.println(datagirl.vertexArrayList);
     }
 
@@ -36,12 +42,12 @@ public class Core extends PApplet{
 
     public void draw(){
         background(0);
-        rect(50,50,50,50);
         text(frameRate,20,20); //this is the frameRate counter
 
+
+        //display every vertex in the arraylist
         for (int i=0; i<vertexArrayList.size(); i++) {
             Vertex p = vertexArrayList.get(i);
-            System.out.println(p.position);
             p.setParent(this);
             p.display();
         }
