@@ -1,4 +1,4 @@
-public class CostumerTimeWindow extends Costumer {
+public class CustomerTimeWindow extends Customer {
     private int serviceTime; //Time it takes for the task to be performed at given node.
     private int readyTime; //The earliest time the costumer is ready to receive the delivery.
     private int dueTime; //The latest time the costumer will accept the delivery
