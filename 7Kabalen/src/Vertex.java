@@ -1,11 +1,10 @@
+import processing.core.PApplet;
 import processing.core.PVector;
-import processing.*;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 public class Vertex {
 
+    PApplet parent;
     PVector position;
     private int st, et, d, mt;
     private boolean isDepot;
@@ -34,6 +33,11 @@ public class Vertex {
     }
 
     void display(){
-        ellipse(position.x, position.y,20,20);
+        parent.fill(255);
+        parent.ellipse(position.x*10, position.y*10, 8, 8); //the multiplier basically just spreads them out
+    }
+
+    void setParent(PApplet p) {
+        parent = p;
     }
 }
