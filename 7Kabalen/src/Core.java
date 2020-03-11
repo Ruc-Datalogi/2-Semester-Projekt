@@ -1,8 +1,7 @@
 import processing.core.*;
-import processing.data.*;
 
-import java.nio.channels.DatagramChannel;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Core extends PApplet{
     /*
@@ -23,10 +22,14 @@ public class Core extends PApplet{
 
     ArrayList<Vertex> vertexArrayList;
 
+    ArrayList<Vehicle> vehicleList;
+
     public void setup() {
+        vehicleList = new ArrayList<>();
+
 
         //setup of the data handler and generation of the solomon data.
-        DataGirl datagirl = new DataGirl("SOLOMON2.csv"); //change what data you want to look at here.
+        DataImporter datagirl = new DataImporter("SOLOMON2.csv"); //change what data you want to look at here.
         datagirl.setParent(this);
 
         try {
@@ -41,15 +44,37 @@ public class Core extends PApplet{
         for (int i = 0; i < datagirl.vertexArrayList.size(); i++) {
             vertexArrayList.get(i).setParent(this);
         }
+
+        //The below two for loops is for a simple solution assigning a vehicle to each vertex.
+        for (int i = 0; i<datagirl.vertexArrayList.size();i++){
+            Vehicle simpleVehicle = new Vehicle(i); //Just assigning the vehicle the id of the vertex for now, should be unique in the future
+            simpleVehicle.addAssignment(vertexArrayList.get(i)); //adds the vertex to the vehicles list of assignments
+            vehicleList.add(simpleVehicle); //adds the vehicle to our list of vehicles in core.
+        }
+
+        for (int i=0; i<vehicleList.size();i++){
+            System.out.println(vehicleList.get(i).toString());
+        }
+
     }
 
     public void draw(){
         background(0);
+        fill(255);
         text(frameRate,20,20); //this is the frameRate counter
 
         //display every vertex in the arraylist
         for (int i=0; i<vertexArrayList.size(); i++) {
             vertexArrayList.get(i).display();
+
         }
+
+        for (int i=0;i<vehicleList.size();i++){
+            stroke(255,200,200);
+            line(vertexArrayList.get(0).position.x*10,vertexArrayList.get(0).position.y*10,vehicleList.get(i).assignedRouted.get(0).position.x*10,vehicleList.get(i).assignedRouted.get(0).position.y*10);
+            //WHY DO WE MULTIPLY BY 10 RANDOMLY???
+
+        }
+
     }
 }
