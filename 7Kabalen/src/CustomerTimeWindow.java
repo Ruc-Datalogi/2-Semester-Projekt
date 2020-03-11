@@ -1,4 +1,8 @@
 public class CustomerTimeWindow extends Customer {
+
+    /*
+        CustomerTimeWindow is a customer with a certain time window for accepting visits.
+     */
     private int serviceTime; //Time it takes for the task to be performed at given node.
     private int readyTime; //The earliest time the costumer is ready to receive the delivery.
     private int dueTime; //The latest time the costumer will accept the delivery

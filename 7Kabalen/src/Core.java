@@ -1,7 +1,5 @@
 import processing.core.*;
-import processing.data.*;
 
-import java.nio.channels.DatagramChannel;
 import java.util.ArrayList;
 
 public class Core extends PApplet{
@@ -26,7 +24,7 @@ public class Core extends PApplet{
     public void setup() {
 
         //setup of the data handler and generation of the solomon data.
-        DataGirl datagirl = new DataGirl("SOLOMON2.csv"); //change what data you want to look at here.
+        DataImporter datagirl = new DataImporter("SOLOMON2.csv"); //change what data you want to look at here.
         datagirl.setParent(this);
 
         try {
