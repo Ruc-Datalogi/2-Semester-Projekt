@@ -5,7 +5,7 @@ import processing.core.PVector;
 import java.util.ArrayList;
 
 //this fucker can import 1000 datas a minute.
-public class DataGirl {
+public class DataImporter {
     String name;
     Table table;
     TableRow row;
@@ -18,7 +18,7 @@ public class DataGirl {
      * Make sure that the .csv file is in the same folder or
      * in a subfolder to \src.
      */
-    DataGirl(String name){
+    DataImporter(String name){
         this.name = name;
     }
 
