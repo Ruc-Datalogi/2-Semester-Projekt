@@ -1,6 +1,7 @@
 import processing.core.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Core extends PApplet{
     /*
@@ -59,11 +60,21 @@ public class Core extends PApplet{
 
     public void draw(){
         background(0);
+        fill(255);
         text(frameRate,20,20); //this is the frameRate counter
 
         //display every vertex in the arraylist
         for (int i=0; i<vertexArrayList.size(); i++) {
             vertexArrayList.get(i).display();
+
         }
+
+        for (int i=0;i<vehicleList.size();i++){
+            stroke(255,200,200);
+            line(vertexArrayList.get(0).position.x*10,vertexArrayList.get(0).position.y*10,vehicleList.get(i).assignedRouted.get(0).position.x*10,vehicleList.get(i).assignedRouted.get(0).position.y*10);
+            //WHY DO WE MULTIPLY BY 10 RANDOMLY???
+
+        }
+
     }
 }

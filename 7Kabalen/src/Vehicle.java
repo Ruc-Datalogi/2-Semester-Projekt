@@ -6,7 +6,7 @@ public class Vehicle {
         Could contain capacity
      */
     private int id;
-    private ArrayList<Vertex> assignedRouted;
+    public ArrayList<Vertex> assignedRouted;
 
     Vehicle(int vehicleID){
         this.id=vehicleID;

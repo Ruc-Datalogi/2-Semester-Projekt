@@ -44,6 +44,7 @@ public class Vertex {
 
         parent.fill(255);
         parent.ellipse(position.x*10, position.y*10, 8, 8); //the multiplier basically just spreads them out
+        //Please figure out a way to translate the coordinates from the data to the visuals without multiplying by arbitrary values.
 
     }
 
