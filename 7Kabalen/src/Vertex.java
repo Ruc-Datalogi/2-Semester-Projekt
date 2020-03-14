@@ -34,7 +34,9 @@ public class Vertex {
     }
 
     void display(){
-        //if vertex is depot display as red
+       /* //if vertex is depot display as red
+       Let's do the drawing somewhere else?
+
         if(isDepot){
             parent.fill(255,0,0);
             parent.text("pos x " + position.x + " " + "pos y " + position.y, getDrawWidth((int) position.x)-20,getDrawHeight((int) position.y)-5);
@@ -46,21 +48,11 @@ public class Vertex {
 
         parent.fill(255);
         parent.ellipse(getDrawWidth((int) position.x),getDrawHeight((int) position.y), 8, 8); //the multiplier basically just spreads them out
-        //Please figure out a way to translate the coordinates from the data to the visuals without multiplying by arbitrary values.
+        //Please figure out a way to translate the coordinates from the data to the visuals without multiplying by arbitrary values.*/
 
     }
-    public int getDrawWidth(int x){
-        if (width==0){
-            this.width=parent.width;
-        }
-        return x*width/100;
-    }
-    public int getDrawHeight(int x){
-        if (height==0){
-            this.height=parent.height;
-        }
-        return x*height/100;
-
+    boolean isDepot(){
+        return this.isDepot;
     }
     void setParent(PApplet p) {
         parent = p; 
