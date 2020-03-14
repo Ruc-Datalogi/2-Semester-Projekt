@@ -56,7 +56,6 @@ public class Vertex {
         return x*width/100;
     }
     public int getDrawHeight(int x){
-        System.out.println(height);
         if (height==0){
             this.height=parent.height;
         }
@@ -64,7 +63,7 @@ public class Vertex {
 
     }
     void setParent(PApplet p) {
-        parent = p;
+        parent = p; 
         this.height=parent.height;
         this.width=parent.width;
     }
