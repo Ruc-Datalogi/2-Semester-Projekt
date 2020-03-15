@@ -84,13 +84,13 @@ public class Core extends PApplet{
         if (width==0){
             this.width=displayWidth;
         }
-        return x*width/100;
+        return x*width/80; //Should be 100 but current data doesn't exceed 77
     }
     public int getDrawHeight(int x){
         if (height==0){
             this.height=displayHeight;
         }
-        return x*height/100;
+        return x*height/80;//Should be 100 but current data doesn't exceed 77
 
     }
 
@@ -117,6 +117,7 @@ public class Core extends PApplet{
         }
 
     }
+
     void drawVehicleRoutes(){
         for (int i=0;i<vehicleList.size();i++){
             stroke(255,200,200);
@@ -125,7 +126,9 @@ public class Core extends PApplet{
             if(depot!=null) {
 
                 line(getDrawWidth(depot.position.x), getDrawHeight(depot.position.x), getDrawWidth(vehicleList.get(i).assignedRouted.get(0).position.x), getDrawHeight(vehicleList.get(i).assignedRouted.get(0).position.y));
-                stroke(0,(vehicleList.size()-i)*255/vehicleList.size(),(i+1)*255/vehicleList.size());
+                int tempColour = (i+1)*255/vehicleList.size();
+                stroke(tempColour,tempColour,255);
+
                 for (int j = 1; j < vehicleList.get(i).assignedRouted.size(); j++) {
                     Vertex previousAssignment=vehicleList.get(i).assignedRouted.get(j-1);
                     Vertex assignment = vehicleList.get(i).assignedRouted.get(j);
