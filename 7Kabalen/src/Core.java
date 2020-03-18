@@ -24,10 +24,12 @@ public class Core extends PApplet{
 
     ArrayList<Vehicle> vehicleList;
 
+
+    CW cw;
+
     public void setup() {
         vehicleList = new ArrayList<>();
         surface.setResizable(true);
-
 
         //setup of the data handler and generation of the solomon data.
         DataImporter datagirl = new DataImporter("SOLOMON2.csv"); //change what data you want to look at here.
@@ -71,7 +73,8 @@ public class Core extends PApplet{
             //System.out.println(vehicleList.get(i).toString());
         }
         //System.out.println("Vehicles: " + vehicleList.size());
-
+        cw = new CW(vertexArrayList,this);
+        cw.initRoute();
     }
     public int getDrawWidth(float x){
 
@@ -153,11 +156,10 @@ public class Core extends PApplet{
 
         //display every vertex in the arraylist
         drawCustomers();
-        drawVehicleRoutes();
-
-
-
+        //drawVehicleRoutes();
+        cw.displayRoute();
     }
+
     public void frameResized(int w, int h){
         //Need to implement resizing
         height=h;

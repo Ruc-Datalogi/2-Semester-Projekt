@@ -1,13 +1,13 @@
 import processing.core.*;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Collections;
+
 
 public class CW {
     HashMap <Vertex, ArrayList<Vertex>> LinkedVertices;
     ArrayList<Vertex> vertexArrayList;
+    HashMap <ArrayList<Vertex>, Float> savingsList;
     int vertexAmount;
     private final static int vehicleAmount = 25;
     //Degeneracy.
@@ -35,21 +35,47 @@ public class CW {
             tempVertexList.add(vertexArrayList.get(0));
             //and then the vertex so that they're ordered.
             tempVertexList.add(tempVertex);
-            System.out.println(tempVertexList.size());
-            System.out.println(tempVertex.position);
 
             //Put it into the HashMap <3
             LinkedVertices.put(tempVertex,tempVertexList);
         }
-        System.out.println(LinkedVertices);
     }
 
-    public float calculateSavings(){
-        Vertex depot = vertexArrayList.get(0);
-        int costi    = dist()
-        int savings =
-        return savings;
+    ArrayList<Vertex> preVertex;
+
+    //Hvilket id tager vi fra? Routen eller hele vertexArrayList?
+    void calculateSavings(Vertex i, Vertex j){
+        Vertex depot  = vertexArrayList.get(0);
+        float costj   = depot.position.dist(j.position);
+        float costi   = depot.position.dist(i.position);
+        float costij  = i.position.dist(j.position);
+        float savings = costi + costj - costij;
+
+        ArrayList<Vertex> tempVertexList = new ArrayList<Vertex>();
+        tempVertexList.add(i);
+        tempVertexList.add(j);
+
+        //istedet for at iterer post, så gøre det før, i.e. tjekke den forrige position i vores hashmap
+        //se om savingsne er større hvis ikke så bare put bagefter men hvis den er større så replace og
+        //add det gamle key-value pair bagpå 0<-bigdik
+
+        //major spaghettikode *sips cumchalice*
+        if(preVertex != null){
+            if(savingsList.get(preVertex) < savings) {
+            savingsList.put(tempVertexList, savings);
+        } else {
+                savingsList.put(tempVertexList, savings);
+            }
+        }
     }
+
+
+    void scanner(){
+        for(int i = 0; i<vertexAmount; i++){
+
+        }
+    }
+
 
     void displayRoute(){
         for (int i = 1; i < vertexAmount; i++) {
@@ -60,6 +86,8 @@ public class CW {
                 daddy.line(tempList.get(j).position.x*daddy.width/80,tempList.get(j).position.y*daddy.height/80,tempList.get(j+1).position.x*daddy.width/80,tempList.get(j+1).position.y*daddy.height/80);
             }
         }
-
     }
+
+
+
 }
