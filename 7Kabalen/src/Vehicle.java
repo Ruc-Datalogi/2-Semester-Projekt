@@ -12,6 +12,7 @@ public class Vehicle {
         this.id=vehicleID;
         assignedRouted = new ArrayList<Vertex>();
     }
+
     void addAssignment(Vertex newAssignment){
         assignedRouted.add(newAssignment);
     }

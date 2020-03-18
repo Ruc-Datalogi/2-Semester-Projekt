@@ -24,6 +24,8 @@ public class Core extends PApplet{
 
     ArrayList<Vehicle> vehicleList;
 
+    CW cw;
+
     public void setup() {
         vehicleList = new ArrayList<>();
         surface.setResizable(true);
@@ -38,9 +40,6 @@ public class Core extends PApplet{
         } catch (Exception e) {
             System.out.println("The data generation broke");
         }
-
-        System.out.println("Size of your data set: " + datagirl.generateVertice().size());
-        System.out.println(datagirl.vertexArrayList);
 
         for (int i = 0; i < datagirl.vertexArrayList.size(); i++) {
             vertexArrayList.get(i).setParent(this);
@@ -57,6 +56,8 @@ public class Core extends PApplet{
             System.out.println(vehicleList.get(i).toString());
         }*/
         //Let's try and give each car 3 assignments, still in order of the Vertex array though
+
+        //TODO migrate to another class.
         for (int i = 0; i<Math.floor(datagirl.vertexArrayList.size()/10);i++){
             Vehicle simpleVehicle = new Vehicle(i); //Just assigning the vehicle the id of the vertex for now, should be unique in the future
             for (int j=1;j<11;j++) {
@@ -72,20 +73,26 @@ public class Core extends PApplet{
         }
         //System.out.println("Vehicles: " + vehicleList.size());
 
+        cw = new CW(vertexArrayList, this);
+        cw.initRoute();
     }
-    public int getDrawWidth(float x){
 
+    //TODO migrate to another class.
+    public int getDrawWidth(float x){
         return getDrawWidth((int) x);
     }
     public int getDrawHeight(float x){
         return getDrawHeight((int) x);
     }
+
     public int getDrawWidth(int x){
         if (width==0){
             this.width=displayWidth;
         }
         return x*width/80; //Should be 100 but current data doesn't exceed 77
     }
+
+    //TODO migrate to another class.
     public int getDrawHeight(int x){
         if (height==0){
             this.height=displayHeight;
@@ -94,20 +101,23 @@ public class Core extends PApplet{
 
     }
 
+    //TODO migrate to another class.
     void drawBetweenTwoVertices(Vertex a, Vertex b){
         line(getDrawWidth(a.position.x), getDrawHeight(a.position.y), getDrawWidth(b.position.x), getDrawHeight(b.position.y));
 
     }
+
+    //TODO migrate to another class.
     void drawCustomers(){
         //Let's handle the drawing here instead of passing around the parent?
         for (int i=0;i<vertexArrayList.size();i++) {
             Vertex custom = vertexArrayList.get(i);
             if (custom.isDepot()) {
                 fill(255, 0, 0);
-                text("pos x " + custom.position.x + " " + "pos y " + custom.position.y, getDrawWidth( custom.position.x) - 20, getDrawHeight(( custom.position.y) - 5));
+                text("pos x " + custom.position.x + " " + "pos y " + custom.position.y, getDrawWidth(custom.position.x) - 20, getDrawHeight((custom.position.y) - 5));
             } else {
                 fill(0, 255, 0);
-                text("pos x " + custom.position.x + " " + "pos y " + custom.position.y, getDrawWidth( custom.position.x) - 20, getDrawHeight(custom.position.y) - 5);
+                text("id: " + i + " pos x " + custom.position.x + " " + "pos y " + custom.position.y, getDrawWidth(custom.position.x) - 20, getDrawHeight(custom.position.y) - 5);
             }
 
 
@@ -118,6 +128,7 @@ public class Core extends PApplet{
 
     }
 
+    //TODO migrate to another class.
     void drawVehicleRoutes(){
         for (int i=0;i<vehicleList.size();i++){
             stroke(255,200,200);
@@ -141,7 +152,6 @@ public class Core extends PApplet{
                 line(getDrawWidth(depot.position.x), getDrawHeight(depot.position.y), getDrawWidth(vehicleList.get(i).assignedRouted.get(vehicleList.get(i).assignedRouted.size() - 1).position.x), getDrawHeight(vehicleList.get(i).assignedRouted.get(vehicleList.get(i).assignedRouted.size() - 1).position.y));
 
                 //line(vertexArrayList.get(0).position.x*10,vertexArrayList.get(0).position.y*10,vehicleList.get(i).assignedRouted.get(0).position.x*10,vehicleList.get(i).assignedRouted.get(0).position.y*10);
-                //WHY DO WE MULTIPLY BY 10 RANDOMLY???
             }
         }
     }
@@ -153,11 +163,11 @@ public class Core extends PApplet{
 
         //display every vertex in the arraylist
         drawCustomers();
-        drawVehicleRoutes();
+        //drawVehicleRoutes();
 
-
-
+        cw.displayRoute();
     }
+
     public void frameResized(int w, int h){
         //Need to implement resizing
         height=h;
