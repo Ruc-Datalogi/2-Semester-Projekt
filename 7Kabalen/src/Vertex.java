@@ -9,6 +9,7 @@ public class Vertex {
     private int st, et, d, mt;
     private boolean isDepot;
     ArrayList<Vertex> edgeVertices;
+    ArrayList<Vertex> route;
     private int height,width;
 
     /**
@@ -32,6 +33,9 @@ public class Vertex {
     void addEdgeVertex(Vertex vertex){
         this.edgeVertices.add(vertex);
     }
+    void addRouteVertex(Vertex vertex){
+        this.route.add(vertex);
+    }
 
     void display(){
        /* //if vertex is depot display as red
@@ -49,8 +53,8 @@ public class Vertex {
         parent.fill(255);
         parent.ellipse(getDrawWidth((int) position.x),getDrawHeight((int) position.y), 8, 8); //the multiplier basically just spreads them out
         //Please figure out a way to translate the coordinates from the data to the visuals without multiplying by arbitrary values.*/
-
     }
+
     boolean isDepot(){
         return this.isDepot;
     }
