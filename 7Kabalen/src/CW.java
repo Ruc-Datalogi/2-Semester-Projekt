@@ -5,14 +5,21 @@ import java.util.HashMap;
 
 
 public class CW {
+    //linkedList/linkedHashmap
     HashMap <Vertex, ArrayList<Vertex>> LinkedVertices;
+    HashMap <Float, ArrayList<Vertex>> savingsMap;
+    ArrayList<Float> savingsList;
     ArrayList<Vertex> vertexArrayList;
-    HashMap <ArrayList<Vertex>, Float> savingsList;
     int vertexAmount;
     private final static int vehicleAmount = 25;
     //Degeneracy.
     PApplet daddy;
 
+    /**
+     * Initialization of the clarke-wright algorithm
+     * @param vertexArrayList
+     * @param parent
+     */
     CW (ArrayList<Vertex> vertexArrayList, PApplet parent) {
         this.vertexArrayList = vertexArrayList;
         this.vertexAmount    = vertexArrayList.size()-1;
@@ -38,10 +45,9 @@ public class CW {
 
             //Put it into the HashMap <3
             LinkedVertices.put(tempVertex,tempVertexList);
+            calculateSavings(vertexArrayList.get(i),vertexArrayList.get(i-1));
         }
     }
-
-    ArrayList<Vertex> preVertex;
 
     //Hvilket id tager vi fra? Routen eller hele vertexArrayList?
     void calculateSavings(Vertex i, Vertex j){
@@ -55,18 +61,11 @@ public class CW {
         tempVertexList.add(i);
         tempVertexList.add(j);
 
-        //istedet for at iterer post, så gøre det før, i.e. tjekke den forrige position i vores hashmap
-        //se om savingsne er større hvis ikke så bare put bagefter men hvis den er større så replace og
-        //add det gamle key-value pair bagpå 0<-bigdik
-
         //major spaghettikode *sips cumchalice*
-        if(preVertex != null){
-            if(savingsList.get(preVertex) < savings) {
-            savingsList.put(tempVertexList, savings);
-        } else {
-                savingsList.put(tempVertexList, savings);
-            }
-        }
+        savingsList = new ArrayList<>();
+        savingsList.add(savings);
+        savingsMap  = new HashMap<>();
+        savingsMap.put(savings,tempVertexList);
     }
 
 
@@ -75,7 +74,6 @@ public class CW {
 
         }
     }
-
 
     void displayRoute(){
         for (int i = 1; i < vertexAmount; i++) {
@@ -87,7 +85,4 @@ public class CW {
             }
         }
     }
-
-
-
 }
