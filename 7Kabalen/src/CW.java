@@ -14,7 +14,6 @@ public class CW {
     ArrayList<Vertex> vertexArrayList;
     int vertexAmount;
     private final static int vehicleAmount = 25;
-    //Degeneracy.
     PApplet daddy;
 
     /**
@@ -48,6 +47,7 @@ public class CW {
 
             //add the depot initially
             tempVertexList.add(vertexArrayList.get(0));
+
             //and then the vertex so that they're ordered.
             tempVertexList.add(tempVertex);
 
