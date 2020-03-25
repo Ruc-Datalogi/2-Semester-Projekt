@@ -1,15 +1,17 @@
 import processing.core.PApplet;
 import processing.core.PVector;
+
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class Vertex {
 
     PApplet parent;
     PVector position;
-    private int st, et, d, mt;
+    int st, et, d, mt;
     private boolean isDepot;
     ArrayList<Vertex> edgeVertices;
-    ArrayList<Vertex> route;
+    ArrayList<Vertex> route = new ArrayList<>();
     private int height,width;
 
     /**
@@ -22,6 +24,8 @@ public class Vertex {
      */
     Vertex(PVector xy, int st, int et, int d, int mt){
         position = xy;
+        this.d = d;
+        this.et = et;
     }
 
     void linkVertices(){};
