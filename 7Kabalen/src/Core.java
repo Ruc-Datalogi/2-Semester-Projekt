@@ -69,7 +69,6 @@ public class Core extends PApplet {
         }
         //System.out.println("Vehicles: " + vehicleList.size());
         cw = new CW(vertexArrayList, this);
-        cw.initRoute();
     }
 
     public int getDrawWidth(float x) {
