@@ -7,12 +7,17 @@ import java.util.HashMap;
 import java.util.LinkedList;
 
 
+
 public class CW {
     //linkedList/linkedHashmap
     HashMap <Vertex, LinkedList<Vertex>> LinkedVertices;
+    //TODO
     HashMap <Float, ArrayList<Vertex>> savingsMap;
     ArrayList<Float> savingsList;
+    //TODO
     ArrayList<Vertex> vertexArrayList;
+    //Import methods from gfx component
+    gfxComponent gfxComponent;
     int vertexAmount;
     private final static int vehicleAmount = 25;
     PApplet daddy;
@@ -29,6 +34,7 @@ public class CW {
         LinkedVertices       = new HashMap<Vertex, LinkedList<Vertex>>();
         this.daddy           = parent;
         this.depot           = vertexArrayList.get(0);
+
         initRoute();
     }
 
@@ -59,14 +65,13 @@ public class CW {
                 //Put it into the HashMap <3
                 LinkedVertices.put(tempVertex,tempVertexList);
 
+                //calculate the savings for every i to j vertex in the graph
                 calculateSavings(vertexArrayList.get(i), vertexArrayList.get(j));
             }
         }
     }
 
-    void runAlgorithm() {
-
-    }
+    void runAlgorithm() {}
 
     /**
      * Caculates the cost, and subsequently savings between 3 vectors.
@@ -76,11 +81,11 @@ public class CW {
      */
     void calculateSavings(Vertex i, Vertex j){
         if(i != j) {
-            float costj = depot.position.dist(j.position);
-            float costi = depot.position.dist(i.position);
-            float costij = i.position.dist(j.position);
-            float savings = costi + costj - costij;
 
+            float costj   = depot.position.dist(j.position);
+            float costi   = depot.position.dist(i.position);
+            float costij  = i.position.dist(j.position);
+            float savings = costi + costj - costij;
 
             ArrayList<Vertex> tempVertexList = new ArrayList<Vertex>();
             tempVertexList.add(i);
@@ -88,6 +93,8 @@ public class CW {
 
             savingsList.add(savings);
             savingsMap.put(savings, tempVertexList);
+
+            calculateSavingsDebug(i,j,savings);
         }
     }
 
@@ -95,49 +102,62 @@ public class CW {
      * 3rd step of the algorithm
      */
 
-    int k = 0;
+    int i = 0;
     int timeTotal = 0;
 
     void scanner(){
         savingsList.sort(Collections.reverseOrder());
-        k = (k+1)%LinkedVertices.size();
+        i = (i+1)%LinkedVertices.size();
         System.out.println(savingsList);
 
-        for(int i = 0; i<k; i++){
-            //get arraylist of the 2 vertices in relation to savings of the key.
-            Vertex x = savingsMap.get(savingsList.get(i)).get(0);
-            Vertex y = savingsMap.get(savingsList.get(i)).get(1);
+        //get arraylist of the 2 vertices in relation to savings of the key.
+        Vertex x = savingsMap.get(savingsList.get(i)).get(0);
+        Vertex y = savingsMap.get(savingsList.get(i)).get(1);
 
-            //Issue we can get duplicates for a savingslist value :C
-            LinkedList<Vertex> tempList = new LinkedList<>();
-                //Are they already linked?
-                System.out.println(i);
-                System.out.println(savingsMap.size());
-                System.out.println(savingsList.size());
-                if (!LinkedVertices.get(x).contains(y)) {
-                    //Does the list exist?
-                    System.out.println("u got through 1st step");
-                    if(LinkedVertices.get(y).size()<3){
-                        System.out.println("u got through 2nd step");
-                        if (LinkedVertices.get(x).size() > 1) {
-                            System.out.println("u got through 3rd step");
-                            System.out.println(timeTotal);
-                            System.out.println(y.et);
+        //Issue we can get duplicates for a savingslist value :C
+        LinkedList<Vertex> tempList = new LinkedList<>();
 
-                            //Have we overstepped our timeTotal?
-                            if (timeTotal < y.et || timeTotal == y.et) {
-                                System.out.println("u got through all the steps hurray");
-                                tempList.add(x);
-                                tempList.add(y);
-                                //STEP 3 Merge.
-                                LinkedVertices.put(x, tempList);
-                                //timeTotal += 10;
-                            }
-                        }
+        System.out.println("Current index: " + i);
+        System.out.println("Size of savingsMap data: " + savingsMap.size());
+        System.out.println("Size of savingsList data: " + savingsList.size());
+        System.out.println("Analyzing vertices: " + x.toString() + y.toString());
+        System.out.println("Analyzing list: " + LinkedVertices.get(x).toString());
+
+        //Are they already linked?
+        if (!LinkedVertices.get(x).contains(y)) {
+            //Are they already involved in a list?
+            System.out.println("u got through 1st step");
+
+            //find a better way of doing this, for depot we get size() to be 2
+            //in fact we dont ever surpass 2 as the arrays are always pairs of 2
+
+            if(LinkedVertices.get(y).size()<3){
+                System.out.println("u got through 2nd step" + LinkedVertices.get(y).size());
+                if (LinkedVertices.get(x).size() > 1) {
+                    System.out.println("u got through 3rd step");
+                    System.out.println(timeTotal);
+                    System.out.println(y.et);
+
+                    //Have we overstepped our timeTotal?
+                    if (timeTotal < y.et || timeTotal == y.et) {
+                        System.out.println("u got through all the steps hurray");
+                        tempList.add(x);
+                        tempList.add(y);
+                        //STEP 3 Merge.
+                        LinkedVertices.put(x, tempList);
+                        //timeTotal += 10;
                     }
                 }
-
+            }
         }
+    }
+
+    void calculateSavingsDebug(Vertex i, Vertex j, float savings){
+        System.out.println("Calc savings: Vertex pair: " + i.toString() + " " + j.toString());
+        System.out.println("Vertex position: " + i.position.toString() + j.position.toString());
+        System.out.println("savings: " + savings);
+        //Should we discard 0 savings-pairs?
+        if (savings == 0) System.out.println("Error.");
     }
 
     void displayRoute(){
