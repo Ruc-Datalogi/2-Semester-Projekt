@@ -1,19 +1,17 @@
 import processing.core.*;
 
-import java.sql.SQLOutput;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.LinkedList;
-
+import java.util.*;
 
 
 public class CW {
     //linkedList/linkedHashmap
     HashMap <Vertex, LinkedList<Vertex>> LinkedVertices;
+
     //TODO
     HashMap <Float, ArrayList<Vertex>> savingsMap;
+    ArrayList <ArrayList<Float>> Sijlist;
     ArrayList<Float> savingsList;
+    TreeMap<Integer, Sij> SijMap;
     //TODO
     ArrayList<Vertex> vertexArrayList;
     //Import methods from gfx component
@@ -45,6 +43,7 @@ public class CW {
     void initRoute() {
         savingsMap  = new HashMap<>();
         savingsList = new ArrayList<>();
+        SijMap      = new TreeMap<>();
 
         for (int i = 1; i < vertexAmount; i++) {
             for(int j = 1; j < vertexAmount; j++) {
@@ -87,6 +86,8 @@ public class CW {
             float costij  = i.position.dist(j.position);
             float savings = costi + costj - costij;
 
+            Sij tempSij = new Sij(savings, i, j);
+
             ArrayList<Vertex> tempVertexList = new ArrayList<Vertex>();
             tempVertexList.add(i);
             tempVertexList.add(j);
@@ -95,6 +96,12 @@ public class CW {
             savingsMap.put(savings, tempVertexList);
 
             calculateSavingsDebug(i,j,savings);
+
+            savingsList.sort(Collections.reverseOrder());
+
+            SijMap.put(this.i, tempSij);
+            System.out.println(SijMap);
+
         }
     }
 
@@ -106,7 +113,6 @@ public class CW {
     int timeTotal = 0;
 
     void scanner(){
-        savingsList.sort(Collections.reverseOrder());
         i = (i+1)%LinkedVertices.size();
         System.out.println(savingsList);
 
@@ -158,6 +164,31 @@ public class CW {
         System.out.println("savings: " + savings);
         //Should we discard 0 savings-pairs?
         if (savings == 0) System.out.println("Error.");
+    }
+
+    class Sij {
+        float S;
+        Vertex i;
+        Vertex j;
+
+        Sij(float S,Vertex i,Vertex j){
+            this.S = S;
+            this.i = i;
+            this.j = j;
+            this.savingsmatrix = new ArrayList<Float>();
+            savingsmatrix.add(S);
+        }
+
+        ArrayList<Vertex> getArray(){
+            ArrayList tempList = new ArrayList<Vertex>();
+            tempList.add(i);
+            tempList.add(j);
+
+            return tempList;
+        }
+
+        ArrayList<Float> savingsmatrix;
+
     }
 
     void displayRoute(){
