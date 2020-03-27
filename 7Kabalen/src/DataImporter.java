@@ -45,6 +45,7 @@ public class DataImporter {
         */
 
         //sorts the imported data, and constucts them as vertices in an arrayList.
+
         for (int i = 0; i<table.getRowCount();i++ ) {
             PVector xy = new PVector(table.getInt(i, 1), table.getInt(i, 2));
 

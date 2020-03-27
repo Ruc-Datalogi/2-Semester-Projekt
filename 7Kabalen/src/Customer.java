@@ -4,7 +4,9 @@ public class Customer {
         (Consider travel time between each node as data)?
      */
     private Location ourLocation;
-
+    Customer(){
+        
+    }
 
     public Location getLocation() {
         return ourLocation;

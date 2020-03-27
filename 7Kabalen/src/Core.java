@@ -1,6 +1,7 @@
 import processing.core.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 public class Core extends PApplet {
@@ -26,7 +27,8 @@ public class Core extends PApplet {
         vehicleList = new ArrayList<>();
         surface.setResizable(true);
 
-        //setup of the data handler and generation of the solomon data.
+        //data/solomon/25/C101.txt
+        //VRPImport data = new VRPImport("7Kabalen//data/solomon/25/C101.txt");
         DataImporter datagirl = new DataImporter("SOLOMON2.csv"); //change what data you want to look at here.
         datagirl.setParent(this);
 
@@ -42,33 +44,8 @@ public class Core extends PApplet {
         for (int i = 0; i < datagirl.vertexArrayList.size(); i++) {
             vertexArrayList.get(i).setParent(this);
         }
-
-        //The below two for loops is for a simple solution assigning a vehicle to each vertex.
-        /*for (int i = 0; i<datagirl.vertexArrayList.size();i++){
-            Vehicle simpleVehicle = new Vehicle(i); //Just assigning the vehicle the id of the vertex for now, should be unique in the future
-            simpleVehicle.addAssignment(vertexArrayList.get(i)); //adds the vertex to the vehicles list of assignments
-            vehicleList.add(simpleVehicle); //adds the vehicle to our list of vehicles in core.
-        }
-
-        for (int i=0; i<vehicleList.size();i++){
-            System.out.println(vehicleList.get(i).toString());
-        }*/
-        //Let's try and give each car 3 assignments, still in order of the Vertex array though
-        for (int i = 0; i < Math.floor(datagirl.vertexArrayList.size() / 10); i++) {
-            Vehicle simpleVehicle = new Vehicle(i); //Just assigning the vehicle the id of the vertex for now, should be unique in the future
-            for (int j = 1; j < 11; j++) {
-                simpleVehicle.addAssignment(vertexArrayList.get((i) * 10 + j)); //adds the vertex to the vehicles list of assignments
-
-            }
-            vehicleList.add(simpleVehicle); //adds the vehicle to our list of vehicles in core.
-            //System.out.println("Vehicle[" + i + "]" + " Size: " + vehicleList.size());
-        }
-
-        for (int i = 0; i < vehicleList.size(); i++) {
-            //System.out.println(vehicleList.get(i).toString());
-        }
-        //System.out.println("Vehicles: " + vehicleList.size());
-        cw = new CW(vertexArrayList, this);
+        CustomerDistanceData distanceMatrix= new CustomerDistanceData(vertexArrayList);
+        System.out.println(Arrays.deepToString(distanceMatrix.DistanceData));
     }
 
     public int getDrawWidth(float x) {
@@ -156,7 +133,7 @@ public class Core extends PApplet {
         //display every vertex in the arraylist
         drawCustomers();
         //drawVehicleRoutes();
-        cw.displayRoute();
+        //cw.displayRoute();
     }
 
     public void frameResized(int w, int h) {
