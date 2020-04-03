@@ -45,7 +45,8 @@ public class Core extends PApplet {
             vertexArrayList.get(i).setParent(this);
         }
         CustomerDistanceData distanceMatrix= new CustomerDistanceData(vertexArrayList);
-        System.out.println(Arrays.deepToString(distanceMatrix.DistanceData));
+        //System.out.println(Arrays.deepToString(distanceMatrix.DistanceData));
+        System.out.println(Arrays.deepToString(distanceMatrix.DistanceData[1]));
     }
 
     public int getDrawWidth(float x) {
