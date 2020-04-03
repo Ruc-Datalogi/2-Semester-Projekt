@@ -49,7 +49,7 @@ public class CW {
         LinkedVertexList = new LinkedList<>();
 
         //first i loop generates the initial solution
-        for (int i = 1; i < vertexAmount; i++) {
+        for (int i = 0; i < vertexAmount; i++) {
             //Create a temporary vertex for every vertex in the
             //solomon data.
             Vertex tempVertex = vertexArrayList.get(i);
@@ -68,10 +68,14 @@ public class CW {
             LinkedVertices.put(tempVertex,tempVertexList);
 
             //calculate the savings for every i to j vertex in the graph
-            for(int j = 1; j < vertexAmount; j++) {
-                calculateSavings(vertexArrayList.get(i), vertexArrayList.get(j));
+            for(int j = 0; j < vertexAmount; j++) {
+                calculateSavings(j, vertexArrayList.get(i), vertexArrayList.get(j));
             }
+            sortSij();
+            System.out.println(sijMap.get(1).s);
+            System.out.println(sijMap.get(sijMap.size()-1).s);
         }
+
     }
 
     void runAlgorithm() {}
@@ -82,7 +86,7 @@ public class CW {
      * @param i a given vertex
      * @param j another given vertex
      */
-    void calculateSavings(Vertex i, Vertex j){
+    void calculateSavings(int k, Vertex i, Vertex j){
         if(i != j) {
             float costj   = depot.position.dist(j.position);
             float costi   = depot.position.dist(i.position);
@@ -102,32 +106,27 @@ public class CW {
 
             savingsList.sort(Collections.reverseOrder());
 
-            sijMap.put(sortSij(tempSij), tempSij);
-            System.out.println(sijMap);
-            sortSij(tempSij);
+            sijMap.put(k, tempSij);
+            System.out.println(sijMap.keySet());
         }
         System.out.println("Size of savingsMap data: " + savingsMap.size());
         System.out.println("Size of savingsList data: " + savingsList.size());
     }
 
     //Calculates on what index we should put our savings data.
-    int sortSij(Sij tempSij){
-        int index = 0;
-        index= sijMap.size();
-        if(index>1){
-            for (int i = 0; i == sijMap.size() - 1; i++) {
+    void sortSij() {
+        for (int i = 1; i < sijMap.size(); i++) {
+            for (int j = 1; j < sijMap.size(); j++) {
                 float savingsi = sijMap.get(i).s;
-                float savingsj = sijMap.get(i + 1).s;
+                float savingsj = sijMap.get(j).s;
 
-                if (savingsi < savingsj) {
-                    Sij firstInd= sijMap.get(i);
-                    sijMap.put(i,sijMap.get(i + 1));
-                    sijMap.put(i+1,firstInd);
+                if (savingsi > savingsj) {
+                    Sij firstInd = sijMap.get(i);
+                    sijMap.put(i, sijMap.get(j));
+                    sijMap.put(j, firstInd);
                 }
-
             }
         }
-        return index;
     }
 
     /**
