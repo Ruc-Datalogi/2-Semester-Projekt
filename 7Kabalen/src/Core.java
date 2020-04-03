@@ -73,8 +73,6 @@ public class Core extends PApplet {
         cw = new CW(vertexArrayList, this);
     }
 
-
-
     public void draw() {
         background(0);
         fill(255);
@@ -83,7 +81,6 @@ public class Core extends PApplet {
         //display every vertex in the arraylist
         //drawVehicleRoutes();
         cw.displayRoute();
-
     }
 
     public void frameResized(int w, int h) {

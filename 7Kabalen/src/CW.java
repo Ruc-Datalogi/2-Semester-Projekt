@@ -6,12 +6,13 @@ import java.util.*;
 public class CW {
     //linkedList/linkedHashmap
     HashMap <Vertex, LinkedList<Vertex>> LinkedVertices;
-
     //TODO
+    LinkedList <Vertex> LinkedVertexList;
     HashMap <Float, ArrayList<Vertex>> savingsMap;
-    ArrayList <ArrayList<Float>> Sijlist;
+    ArrayList <ArrayList<Float>> SijList;
     ArrayList<Float> savingsList;
-    TreeMap<Integer, Sij> SijMap;
+    //The integer key, when sorted, denotes from non increasing order where our savings are largest.
+    TreeMap<Integer, Sij> sijMap;
     //TODO
     ArrayList<Vertex> vertexArrayList;
     //Import methods from gfx component
@@ -41,30 +42,33 @@ public class CW {
      * 1st step of the algorithm
      */
     void initRoute() {
-        savingsMap  = new HashMap<>();
-        savingsList = new ArrayList<>();
-        SijMap      = new TreeMap<>();
+        //init data lists
+        savingsMap       = new HashMap<>();
+        savingsList      = new ArrayList<>();
+        sijMap           = new TreeMap<>();
+        LinkedVertexList = new LinkedList<>();
 
+        //first i loop generates the initial solution
         for (int i = 1; i < vertexAmount; i++) {
+            //Create a temporary vertex for every vertex in the
+            //solomon data.
+            Vertex tempVertex = vertexArrayList.get(i);
+
+            //Create a temporary list where we link the initial solution so that
+            //we have a list of the depot and the i'th vertex.
+            LinkedList<Vertex> tempVertexList = new LinkedList<Vertex>();
+
+            //add the depot initially
+            tempVertexList.add(vertexArrayList.get(0));
+
+            //and then the vertex so that they're ordered.
+            tempVertexList.add(tempVertex);
+
+            //Put it into the HashMap <3
+            LinkedVertices.put(tempVertex,tempVertexList);
+
+            //calculate the savings for every i to j vertex in the graph
             for(int j = 1; j < vertexAmount; j++) {
-                //Create a temporary vertex for every vertex in the
-                //solomon data.
-                Vertex tempVertex = vertexArrayList.get(i);
-
-                //Create a temporary list where we link the initial solution so that
-                //we have a list of the depot and the i'th vertex.
-                LinkedList<Vertex> tempVertexList = new LinkedList<Vertex>();
-
-                //add the depot initially
-                tempVertexList.add(vertexArrayList.get(0));
-
-                //and then the vertex so that they're ordered.
-                tempVertexList.add(tempVertex);
-
-                //Put it into the HashMap <3
-                LinkedVertices.put(tempVertex,tempVertexList);
-
-                //calculate the savings for every i to j vertex in the graph
                 calculateSavings(vertexArrayList.get(i), vertexArrayList.get(j));
             }
         }
@@ -80,7 +84,6 @@ public class CW {
      */
     void calculateSavings(Vertex i, Vertex j){
         if(i != j) {
-
             float costj   = depot.position.dist(j.position);
             float costi   = depot.position.dist(i.position);
             float costij  = i.position.dist(j.position);
@@ -99,10 +102,29 @@ public class CW {
 
             savingsList.sort(Collections.reverseOrder());
 
-            SijMap.put(this.i, tempSij);
-            System.out.println(SijMap);
+            sijMap.put(sortSij(tempSij), tempSij);
+            System.out.println(sijMap);
+            sortSij(tempSij);
+        }
+        System.out.println("Size of savingsMap data: " + savingsMap.size());
+        System.out.println("Size of savingsList data: " + savingsList.size());
+    }
+
+    //Calculates on what index we should put our savings data.
+    int sortSij(Sij tempSij){
+        int index = 0;
+
+        for(int i = 0; i == sijMap.size()-1; i++){
+            float savingsi = sijMap.get(i).s;
+            float savingsj = sijMap.get(i+1).s;
+
+            if(savingsi < savingsj){
+
+            }
 
         }
+
+        return index;
     }
 
     /**
@@ -124,8 +146,6 @@ public class CW {
         LinkedList<Vertex> tempList = new LinkedList<>();
 
         System.out.println("Current index: " + i);
-        System.out.println("Size of savingsMap data: " + savingsMap.size());
-        System.out.println("Size of savingsList data: " + savingsList.size());
         System.out.println("Analyzing vertices: " + x.toString() + y.toString());
         System.out.println("Analyzing list: " + LinkedVertices.get(x).toString());
 
@@ -167,28 +187,18 @@ public class CW {
     }
 
     class Sij {
-        float S;
+        float s;
         Vertex i;
         Vertex j;
+        ArrayList<Float> savingsMatrix;
 
-        Sij(float S,Vertex i,Vertex j){
-            this.S = S;
+        Sij(float s,Vertex i,Vertex j){
+            this.s = s;
             this.i = i;
             this.j = j;
-            this.savingsmatrix = new ArrayList<Float>();
-            savingsmatrix.add(S);
+            this.savingsMatrix = new ArrayList<Float>();
+            savingsMatrix.add(s);
         }
-
-        ArrayList<Vertex> getArray(){
-            ArrayList tempList = new ArrayList<Vertex>();
-            tempList.add(i);
-            tempList.add(j);
-
-            return tempList;
-        }
-
-        ArrayList<Float> savingsmatrix;
-
     }
 
     void displayRoute(){

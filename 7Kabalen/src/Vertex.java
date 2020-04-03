@@ -26,6 +26,8 @@ public class Vertex {
         position = xy;
         this.d = d;
         this.et = et;
+        this.mt = mt;
+        this.st = st;
     }
 
     void linkVertices(){};
@@ -62,6 +64,7 @@ public class Vertex {
     boolean isDepot(){
         return this.isDepot;
     }
+
     void setParent(PApplet p) {
         parent = p; 
         this.height=parent.height;
