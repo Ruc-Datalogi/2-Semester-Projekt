@@ -113,17 +113,20 @@ public class CW {
     //Calculates on what index we should put our savings data.
     int sortSij(Sij tempSij){
         int index = 0;
+        index= sijMap.size();
+        if(index>1){
+            for (int i = 0; i == sijMap.size() - 1; i++) {
+                float savingsi = sijMap.get(i).s;
+                float savingsj = sijMap.get(i + 1).s;
 
-        for(int i = 0; i == sijMap.size()-1; i++){
-            float savingsi = sijMap.get(i).s;
-            float savingsj = sijMap.get(i+1).s;
-
-            if(savingsi < savingsj){
+                if (savingsi < savingsj) {
+                    Sij firstInd= sijMap.get(i);
+                    sijMap.put(i,sijMap.get(i + 1));
+                    sijMap.put(i+1,firstInd);
+                }
 
             }
-
         }
-
         return index;
     }
 
