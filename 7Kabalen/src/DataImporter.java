@@ -38,22 +38,15 @@ public class DataImporter {
         //ArrayList constructor
         ArrayList<Vertex> tempVertexArrayList = new ArrayList<>();
 
-        /*
-        System.out.println("Data row count: " + table.getRowCount());
-        System.out.println("Data column count: " + table.getColumnCount());
-        System.out.println("test" + row.getInt(1));
-        */
-
         //sorts the imported data, and constucts them as vertices in an arrayList.
         for (int i = 0; i<table.getRowCount();i++ ) {
-            PVector xy = new PVector(table.getInt(i, 1), table.getInt(i, 2));
-
+            PVector xy    = new PVector(table.getInt(i, 1), table.getInt(i, 2));
             Vertex vertex = new Vertex(xy, table.getInt(i, 4), table.getInt(i, 5), table.getInt(i, 3), table.getInt(i, 6));
             tempVertexArrayList.add(vertex);
-            System.out.println(xy);
         }
-        //debating removing this
+
         tempVertexArrayList.get(0).setDepot();
+
         vertexArrayList = tempVertexArrayList;
         return tempVertexArrayList;
     }
@@ -61,6 +54,4 @@ public class DataImporter {
     void setParent(PApplet p) {
         parent = p;
     }
-
-
 }

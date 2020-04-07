@@ -1,4 +1,5 @@
 import processing.core.PApplet;
+import processing.core.PVector;
 
 import java.util.ArrayList;
 
@@ -41,7 +42,6 @@ public class gfxComponent {
 
     public void drawBetweenTwoVertices(Vertex a, Vertex b) {
         parent.line(getDrawWidth(a.position.x), getDrawHeight(a.position.y), getDrawWidth(b.position.x), getDrawHeight(b.position.y));
-
     }
 
     void drawCustomers() {
@@ -54,39 +54,17 @@ public class gfxComponent {
                 parent.fill(0, 255, 0);
                 parent.text("pos x " + custom.position.x + " " + "pos y " + custom.position.y, getDrawWidth(custom.position.x) - 20, getDrawHeight(custom.position.y) - 5);
             }
-
-
             parent.fill(255);
             parent.ellipse(getDrawWidth((int) custom.position.x), getDrawHeight((int) custom.position.y), 8, 8); //the multiplier basically just spreads them out
             //Please figure out a way to translate the coordinates from the data to the visuals without multiplying by arbitrary values.
         }
-
     }
 
-    void drawVehicleRoutes() {
-        for (int i = 0; i < vehicleList.size(); i++) {
-            parent.stroke(255, 200, 200);
-            //First visual line is between depot and the first assignment
-            Vertex depot = vertexArrayList.get(0);
-            if (depot != null) {
-
-                parent.line(getDrawWidth(depot.position.x), getDrawHeight(depot.position.x), getDrawWidth(vehicleList.get(i).assignedRouted.get(0).position.x), getDrawHeight(vehicleList.get(i).assignedRouted.get(0).position.y));
-                int tempColour = (i + 1) * 255 / vehicleList.size();
-                parent.stroke(tempColour, tempColour, 255);
-
-                for (int j = 1; j < vehicleList.get(i).assignedRouted.size(); j++) {
-                    Vertex previousAssignment = vehicleList.get(i).assignedRouted.get(j - 1);
-                    Vertex assignment = vehicleList.get(i).assignedRouted.get(j);
-
-                    drawBetweenTwoVertices(previousAssignment, assignment);
-
-
-                }
-                //Last line is between last assignment and depot
-                parent.line(getDrawWidth(depot.position.x), getDrawHeight(depot.position.y), getDrawWidth(vehicleList.get(i).assignedRouted.get(vehicleList.get(i).assignedRouted.size() - 1).position.x), getDrawHeight(vehicleList.get(i).assignedRouted.get(vehicleList.get(i).assignedRouted.size() - 1).position.y));
-
-                //line(vertexArrayList.get(0).position.x*10,vertexArrayList.get(0).position.y*10,vehicleList.get(i).assignedRouted.get(0).position.x*10,vehicleList.get(i).assignedRouted.get(0).position.y*10);
-                //WHY DO WE MULTIPLY BY 10 RANDOMLY???
+    void drawRoutes(ArrayList<Route> routes){
+        for(Route route : routes){
+            for(int i = 0; i < route.assignedVertices.size()-1; i++){
+                parent.stroke(0,255,0);
+                drawBetweenTwoVertices(route.assignedVertices.get(i),route.assignedVertices.get(i+1));
             }
         }
     }
