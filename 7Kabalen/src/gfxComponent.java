@@ -62,9 +62,12 @@ public class gfxComponent {
 
     void drawRoutes(ArrayList<Route> routes){
         for(Route route : routes){
-            for(int i = 0; i < route.assignedVertices.size()-1; i++){
-                parent.stroke(0,255,0);
-                drawBetweenTwoVertices(route.assignedVertices.get(i),route.assignedVertices.get(i+1));
+            for(int i = 0; i < route.assignedVertices.size()-1; i++) {
+                parent.stroke(0, 255, 0);
+                drawBetweenTwoVertices(route.assignedVertices.get(i), route.assignedVertices.get(i + 1));
+                int r = (int) (Math.random() * 255);
+                parent.stroke(r, r, r);
+                drawBetweenTwoVertices(route.assignedVertices.get(route.assignedVertices.size() - 1), route.assignedVertices.get(0));
             }
         }
     }

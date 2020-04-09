@@ -11,7 +11,6 @@ public class Route implements Comparable<Route> {
     public ArrayList<Vertex> assignedVertices;
     float cost;
     float savings;
-
     Route() {
         assignedVertices = new ArrayList<Vertex>();
         cost             = 0;

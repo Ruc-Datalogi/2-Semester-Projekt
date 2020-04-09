@@ -57,12 +57,20 @@ public class Core extends PApplet {
 
         cw.gfxComponent.drawCustomers();
         cw.gfxComponent.drawRoutes(cw.routes);
-        cw.stepScanner();
+        //cw.scanner();
+
+        if(run == true){
+            cw.stepScanner();
+        }
     }
 
+    //Controls
+    boolean run = false;
     public void keyPressed() {
         if ((key >= 'A' && key <= 'Z') || (key >= 'a' && key <= 'z')) {
             cw.stepScanner();
+        } else if ((keyCode == BACKSPACE)){
+            run = !run;
         }
     }
 }

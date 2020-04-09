@@ -22,10 +22,10 @@ public class CW {
      */
     CW(ArrayList<Vertex> vertexArrayList, PApplet parent, ArrayList<Vehicle> vehicleArrayList) {
         this.vertexArrayList = vertexArrayList;
-        this.daddy           = parent;
-        this.depot           = vertexArrayList.get(0);
-        this.gfxComponent    = new gfxComponent(parent.width, parent.height, vertexArrayList, vehicleArrayList, daddy);
-        LinkedVertices       = new ArrayList<Vertex>();
+        this.daddy = parent;
+        this.depot = vertexArrayList.get(0);
+        this.gfxComponent = new gfxComponent(parent.width, parent.height, vertexArrayList, vehicleArrayList, daddy);
+        LinkedVertices = new ArrayList<Vertex>();
 
         initRoute();
         calculateSavings();
@@ -38,13 +38,13 @@ public class CW {
      */
     void initRoute() {
         //init data lists
-        routes       = new ArrayList<>();
-        savingsList  = new ArrayList<>();
+        routes = new ArrayList<>();
+        savingsList = new ArrayList<>();
         depot.isEdge = false;
 
         //make a new route for every vertex in the vertexArrayList
         for (Vertex vertex : vertexArrayList) {
-            Route route   = new Route();
+            Route route = new Route();
             vertex.isEdge = true;
             route.addVertex(depot);
             route.addVertex(vertex);
@@ -61,10 +61,10 @@ public class CW {
         //distance calculation
         for (Vertex i : vertexArrayList) {
             for (Vertex j : vertexArrayList) {
-                if(!(i==j) && !i.isDepot() && !j.isDepot()){
-                    float costj = depot.position.dist(j.position);
-                    float costi = depot.position.dist(i.position);
-                    float costij = i.position.dist(j.position);
+                if (!(i == j) && !i.isDepot() && !j.isDepot()) {
+                    float costj   = depot.position.dist(j.position);
+                    float costi   = depot.position.dist(i.position);
+                    float costij  = i.position.dist(j.position);
                     float savings = costi + costj - costij;
 
                     Route tempRoute = new Route();
@@ -85,91 +85,81 @@ public class CW {
      * 3rd step of the algorithm
      */
     void scanner() {
-        for (Route route : savingsList){
-            int sizeAssignedVertices = route.assignedVertices.size()-1;
+        for (Route route : savingsList) {
+            Route sij = route;
+            Vertex i = sij.assignedVertices.get(0);
+            Vertex j = sij.assignedVertices.get(sij.assignedVertices.size() - 1);
 
-            Vertex vertexI = route.assignedVertices.get(0);
-            Vertex vertexJ = route.assignedVertices.get(sizeAssignedVertices);
+            //get which route i, and j are in.
+            for (Route routeI : routes) {
+                for (Route routeJ : routes) {
+                    if (routeI.assignedVertices.contains(i) && routeJ.assignedVertices.contains(j)) {
+                        //check if i and j are in the same route
+                        if (!(routeI == routeJ)) {
+                            //check if i and j are edge vertices
 
-            //if conditional for checken edge case in vertex class.
+                            //i first in order j last
+                            if (routeI.assignedVertices.indexOf(i) == 1 && routeJ.assignedVertices.indexOf(j) == routeJ.assignedVertices.size() - 1) {
+                                ArrayList<Vertex> tempRouteI = routeI.assignedVertices;
+                                System.out.println("Hey hey this bis beroe adding " + routeJ.assignedVertices);
+                                tempRouteI.remove(depot);
+                                routeJ.assignedVertices.addAll(tempRouteI);
+                                System.out.println("this is after adding " + routeJ.assignedVertices);
+                                routes.get(routes.indexOf(routeI)).assignedVertices = new ArrayList<Vertex>();
 
-            //check if vertex is 0,i or j,0
-            if (vertexI.isEdge && vertexJ.isEdge){
-
-                //scan through all routes
-                for(Route route2 : routes){
-
-                    //if the route contains the vertexI
-                    //then add J
-                    if (route2.assignedVertices.contains(vertexI)){
-                        route2.assignedVertices.add(vertexJ);
-
-                        //if the route is now larger than 3 after you've added J, set the previous
-                        //vertex in the arrayList to no longer be an edge vertex.
-                        if (route2.assignedVertices.size()>3) {
-                            route2.assignedVertices.get(route2.assignedVertices.indexOf(vertexI)).isEdge = false;
-                        }
-
-                    } else route2.assignedVertices.remove(vertexJ);
-                }
-            }
-        }
-    }
-
-    int i = 0;
-    void stepScanner() {
-        Route route = savingsList.get(i);
-        int sizeAssignedVertices = route.assignedVertices.size()-1;
-
-        Vertex vertexI = route.assignedVertices.get(0);
-        Vertex vertexJ = route.assignedVertices.get(sizeAssignedVertices);
-        //if conditional for checken edge case in vertex class.
-
-        //check if vertex is 0,i or j,0
-
-        System.out.println("Route " + route);
-        System.out.println("Route size" + route.assignedVertices.size());
-        System.out.println("Vertices: " + vertexI + " , " + vertexJ);
-
-        if ((vertexI != vertexJ) && vertexI.isEdge && vertexJ.isEdge){
-            System.out.println("passed this step you nignognigger");
-
-            //scan through all routes
-            for(Route route2 : routes){
-                Route caseRoute = route2;
-
-                System.out.println("Route 2 size: " + route2.assignedVertices.size());
-                System.out.println("Route 2: " + route2.assignedVertices);
-
-                //if the route contains the vertexI
-                //then add J
-                if (route2.assignedVertices.contains(vertexI)){
-
-                    System.out.println("Vertex I, route 2: " + vertexI);
-                    if(!(route2.assignedVertices.contains(vertexI)&&route2.assignedVertices.contains(vertexJ))){
-                        System.out.println("Vertex J, route 2: " + vertexJ);
-
-                        System.out.println("you passed this tep you abolsute faucking fag");
-                        caseRoute.assignedVertices.add(vertexJ);
-
-                        //if the route is now larger than 3 after you've added J, set the previous
-                        //vertex in the arrayList to no longer be an edge vertex.
-                        if (route2.assignedVertices.size()>3) {
-                            System.out.println("you passed dis mon");
-
-                            route2.assignedVertices.get(route2.assignedVertices.indexOf(vertexI)).isEdge = false;
-                            System.out.println("Looking at this route " + route2.assignedVertices + " , " + route2.assignedVertices.get(route2.assignedVertices.indexOf(vertexI)) + " was assinged false");
-                            for (Route route3 : routes){
-                                if (route3.assignedVertices.contains(vertexJ)){
-                                    route3.assignedVertices.remove(vertexJ);
-                                }
+                                //j first, i last
+                            } else if (routeJ.assignedVertices.indexOf(j) == 1 && routeI.assignedVertices.indexOf(i) == routeI.assignedVertices.size() - 1) {
+                                ArrayList<Vertex> tempRouteJ = routeJ.assignedVertices;
+                                System.out.println("Hey hey this bis beroe adding " + routeI.assignedVertices);
+                                tempRouteJ.remove(depot);
+                                routeI.assignedVertices.addAll(tempRouteJ);
+                                System.out.println("this is after adding " + routeI.assignedVertices);
+                                routes.get(routes.indexOf(routeJ)).assignedVertices = new ArrayList<>();
                             }
-                            routes.set(routes.indexOf(route2), caseRoute);
                         }
                     }
                 }
             }
         }
-        i = (i+1)%savingsList.size();
+    }
+
+    int k = 0;
+
+    void stepScanner() {
+        Route sij = savingsList.get(k);
+        Vertex i = sij.assignedVertices.get(0);
+        Vertex j = sij.assignedVertices.get(sij.assignedVertices.size() - 1);
+
+        //get which route i, and j are in.
+        for (Route routeI : routes) {
+            for (Route routeJ : routes) {
+                if (routeI.assignedVertices.contains(i) && routeJ.assignedVertices.contains(j)) {
+                    //check if i and j are in the same route
+                    if (!(routeI == routeJ)) {
+                        //check if i and j are edge vertices
+
+                        //i first in order j last
+                        if (routeI.assignedVertices.indexOf(i) == 1 && routeJ.assignedVertices.indexOf(j) == routeJ.assignedVertices.size() - 1) {
+                            ArrayList<Vertex> tempRouteI = routeI.assignedVertices;
+                            System.out.println("Hey hey this bis beroe adding " + routeJ.assignedVertices);
+                            tempRouteI.remove(depot);
+                            routeJ.assignedVertices.addAll(tempRouteI);
+                            System.out.println("this is after adding " + routeJ.assignedVertices);
+                            routes.get(routes.indexOf(routeI)).assignedVertices = new ArrayList<Vertex>();
+
+                            //j first, i last
+                        } else if (routeJ.assignedVertices.indexOf(j) == 1 && routeI.assignedVertices.indexOf(i) == routeI.assignedVertices.size() - 1) {
+                            ArrayList<Vertex> tempRouteJ = routeJ.assignedVertices;
+                            System.out.println("Hey hey this bis beroe adding " + routeI.assignedVertices);
+                            tempRouteJ.remove(depot);
+                            routeI.assignedVertices.addAll(tempRouteJ);
+                            System.out.println("this is after adding " + routeI.assignedVertices);
+                            routes.get(routes.indexOf(routeJ)).assignedVertices = new ArrayList<>();
+                        }
+                    }
+                }
+            }
+        }
+        k = (k + 1) % savingsList.size();
     }
 }
