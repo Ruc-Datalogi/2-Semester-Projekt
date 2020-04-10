@@ -30,13 +30,17 @@ public class CW {
         initRoute();
         calculateSavings();
         scanner();
+
         int dumbCount=0;
         for(int i=0;i<this.routes.size();i++){
             if(this.routes.get(i).assignedVertices.size()>1){
                 dumbCount++;
+            }else{
+                this.routes.remove(i);
+                i--;
             }
         }
-        System.out.println("We have approx ~" + (dumbCount-1) + " routes");
+        System.out.println("We have approx ~" + (dumbCount-1) + " routes " + routes.size());
     }
 
     /**

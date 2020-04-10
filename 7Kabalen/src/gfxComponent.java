@@ -9,7 +9,36 @@ public class gfxComponent {
     ArrayList<Vehicle> vehicleList;
 
     PApplet parent;
+    class dumbColour{
+        int r,g,b;
+        dumbColour(int r,int g, int b){
+            this.r = r;
+            this.g = g;
+            this.b = b;
+        }
 
+    }
+    dumbColour TheseColours[]= {
+            new dumbColour(247,67,67),
+            new dumbColour(130,94,35),
+            new dumbColour(27,130,9),
+            new dumbColour(35,122,130),
+            new dumbColour(61,82,130),
+            new dumbColour(239,116,247),
+            new dumbColour(247,116,175),
+            new dumbColour(130,35,35),
+            new dumbColour(194,247,17),
+            new dumbColour(136,247,116),
+            new dumbColour(116,236,247),
+            new dumbColour(47,9,130),
+            new dumbColour(125,61,130),
+            new dumbColour(247,178,67),
+            new dumbColour(114,130,61),
+            new dumbColour(61,130,93),
+            new dumbColour(116,156,247),
+            new dumbColour(124,67,247),
+            new dumbColour(130,9,64)
+    };
     gfxComponent(int width, int height, ArrayList<Vertex> vertexArrayList, ArrayList<Vehicle> vehicleList, PApplet parent){
         this.parent = parent;
         this.vertexArrayList = vertexArrayList;
@@ -61,14 +90,19 @@ public class gfxComponent {
     }
 
     void drawRoutes(ArrayList<Route> routes){
+        int dumbNumber=0;
         for(Route route : routes){
+            dumbColour myUniqueSnowflakeColour = TheseColours[dumbNumber];
+            parent.stroke(myUniqueSnowflakeColour.r,myUniqueSnowflakeColour.g,myUniqueSnowflakeColour.b);
             for(int i = 0; i < route.assignedVertices.size()-1; i++) {
-                parent.stroke(0, 255, 0);
+
+                //parent.stroke(0, 255, 0);
                 drawBetweenTwoVertices(route.assignedVertices.get(i), route.assignedVertices.get(i + 1));
-                parent.stroke(255,0,0);
+                //parent.stroke(255,0,0);
                 drawBetweenTwoVertices(route.assignedVertices.get(route.assignedVertices.size() - 1), route.assignedVertices.get(0));
-                parent.noStroke();
+                //parent.noStroke();
             }
+            dumbNumber++;
         }
     }
 }
