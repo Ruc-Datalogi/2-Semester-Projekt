@@ -14,7 +14,7 @@ public class CW {
     PApplet daddy;
     Vertex depot;
     static final int vehicleAmount = 25;
-
+    static final int routeCapacity = 100;
     /**
      * Initialization of the clarke-wright algorithm
      * @param vertexArrayList solomon data
@@ -30,6 +30,13 @@ public class CW {
         initRoute();
         calculateSavings();
         scanner();
+        int dumbCount=0;
+        for(int i=0;i<this.routes.size();i++){
+            if(this.routes.get(i).assignedVertices.size()>1){
+                dumbCount++;
+            }
+        }
+        System.out.println("We have approx ~" + (dumbCount-1) + " routes");
     }
 
     /**
@@ -93,30 +100,32 @@ public class CW {
             //get which route i, and j are in.
             for (Route routeI : routes) {
                 for (Route routeJ : routes) {
-                    if (routeI.assignedVertices.contains(i) && routeJ.assignedVertices.contains(j)) {
+                    if (!(routeI == routeJ) && routeI.assignedVertices.contains(i) && routeJ.assignedVertices.contains(j)) {
                         //check if i and j are in the same route
-                        if (!(routeI == routeJ)) {
-                            //check if i and j are edge vertices
+                        //check if i and j are edge vertices
 
-                            //i first in order j last
-                            if (routeI.assignedVertices.indexOf(i) == 1 && routeJ.assignedVertices.indexOf(j) == routeJ.assignedVertices.size() - 1) {
-                                ArrayList<Vertex> tempRouteI = routeI.assignedVertices;
-                                System.out.println("Hey hey this bis beroe adding " + routeJ.assignedVertices);
+
+                        //i first in order j last
+                        if (routeI.assignedVertices.indexOf(i) == 1 && routeJ.assignedVertices.indexOf(j) == routeJ.assignedVertices.size() - 1) {
+                            ArrayList<Vertex> tempRouteI = routeI.assignedVertices;
+                            if (routeJ.cost + routeI.cost < routeCapacity) {
                                 tempRouteI.remove(depot);
+                                routeJ.addAllVertices(tempRouteI);
                                 routeJ.assignedVertices.addAll(tempRouteI);
-                                System.out.println("this is after adding " + routeJ.assignedVertices);
                                 routes.get(routes.indexOf(routeI)).assignedVertices = new ArrayList<Vertex>();
-
-                                //j first, i last
-                            } else if (routeJ.assignedVertices.indexOf(j) == 1 && routeI.assignedVertices.indexOf(i) == routeI.assignedVertices.size() - 1) {
-                                ArrayList<Vertex> tempRouteJ = routeJ.assignedVertices;
-                                System.out.println("Hey hey this bis beroe adding " + routeI.assignedVertices);
+                            }
+                            //j first, i last
+                        } else if (routeJ.assignedVertices.indexOf(j) == 1 && routeI.assignedVertices.indexOf(i) == routeI.assignedVertices.size() - 1) {
+                            ArrayList<Vertex> tempRouteJ = routeJ.assignedVertices;
+                            if (routeJ.cost + routeI.cost < routeCapacity) {
                                 tempRouteJ.remove(depot);
+                                routeI.addAllVertices(tempRouteJ);
                                 routeI.assignedVertices.addAll(tempRouteJ);
-                                System.out.println("this is after adding " + routeI.assignedVertices);
                                 routes.get(routes.indexOf(routeJ)).assignedVertices = new ArrayList<>();
                             }
+
                         }
+
                     }
                 }
             }

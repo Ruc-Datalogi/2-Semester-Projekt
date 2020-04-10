@@ -18,10 +18,17 @@ public class Route implements Comparable<Route> {
     }
 
     public void addVertex(Vertex vertex){
+        cost += vertex.d;
         assignedVertices.add(vertex);
 
         if(vertex.et < cost){
             System.out.println("ya dunn");
+        }
+    }
+    //Just for cost calculations
+    public void addAllVertices(ArrayList<Vertex> addedRoutes){
+        for(int i=0;i<addedRoutes.size();i++){
+            cost+=addedRoutes.get(i).d;
         }
     }
 
