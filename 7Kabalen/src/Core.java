@@ -57,9 +57,8 @@ public class Core extends PApplet {
 
         cw.gfxComponent.drawCustomers();
         cw.gfxComponent.drawRoutes(cw.routes);
-        //cw.scanner();
 
-        if(run == true){
+        if(run){
             cw.stepScanner();
         }
     }

@@ -13,12 +13,12 @@ public class CW {
     gfxComponent gfxComponent;
     PApplet daddy;
     Vertex depot;
+    static final int vehicleAmount = 25;
 
     /**
      * Initialization of the clarke-wright algorithm
-     *
-     * @param vertexArrayList
-     * @param parent
+     * @param vertexArrayList solomon data
+     * @param parent for drawing
      */
     CW(ArrayList<Vertex> vertexArrayList, PApplet parent, ArrayList<Vehicle> vehicleArrayList) {
         this.vertexArrayList = vertexArrayList;
@@ -29,7 +29,7 @@ public class CW {
 
         initRoute();
         calculateSavings();
-        //scanner();
+        scanner();
     }
 
     /**
@@ -38,13 +38,13 @@ public class CW {
      */
     void initRoute() {
         //init data lists
-        routes = new ArrayList<>();
-        savingsList = new ArrayList<>();
+        routes       = new ArrayList<>();
+        savingsList  = new ArrayList<>();
         depot.isEdge = false;
 
         //make a new route for every vertex in the vertexArrayList
         for (Vertex vertex : vertexArrayList) {
-            Route route = new Route();
+            Route route   = new Route();
             vertex.isEdge = true;
             route.addVertex(depot);
             route.addVertex(vertex);
@@ -87,8 +87,8 @@ public class CW {
     void scanner() {
         for (Route route : savingsList) {
             Route sij = route;
-            Vertex i = sij.assignedVertices.get(0);
-            Vertex j = sij.assignedVertices.get(sij.assignedVertices.size() - 1);
+            Vertex i  = sij.assignedVertices.get(0);
+            Vertex j  = sij.assignedVertices.get(sij.assignedVertices.size() - 1);
 
             //get which route i, and j are in.
             for (Route routeI : routes) {
@@ -127,8 +127,8 @@ public class CW {
 
     void stepScanner() {
         Route sij = savingsList.get(k);
-        Vertex i = sij.assignedVertices.get(0);
-        Vertex j = sij.assignedVertices.get(sij.assignedVertices.size() - 1);
+        Vertex i  = sij.assignedVertices.get(0);
+        Vertex j  = sij.assignedVertices.get(sij.assignedVertices.size() - 1);
 
         //get which route i, and j are in.
         for (Route routeI : routes) {
