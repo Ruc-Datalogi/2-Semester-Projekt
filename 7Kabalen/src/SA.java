@@ -12,42 +12,43 @@ public class SA {
     ArrayList<Route> s0;
     float k;
     float kmax;
-    float T = 1;
+    double T = 100;
+
 
     public void SA(float kmax, ArrayList<Route> initalRoute) {
         this.kmax = kmax;
         s0 = initalRoute;
         k = 0;
-
-        float scost = 0;
-        float s0cost = 0;
+        float S = 0;
+        float S0 = 0;
         float p = 0;
+        double alpha = 0.0015;
+        float TStop = 230;
 
-        for (Route route : s) {
-            scost = scost + route.cost;
+        for (Route route : initalRoute) {
+            S = S + route.cost;
         }
 
-        for (Route route : s0) {
-            s0cost = s0cost + route.cost;
-        }
+        while (T > TStop) {
+            for (int i = 0; kmax < i; i++) {
+                k = i;
+                T = (k + 1 / kmax);
 
-        for (int i = 0; kmax < i; i++) {
-            k = i;
-            T = (k + 1 / kmax);
+                if (S0 < S) {
+                    S = S0;
+                } else {
+                    p = exp((float) -(S0 - S / T));
+                    if (p < Math.random()) {
+                        S = S0;
 
-            if (s0cost < scost) {
-                s = s0;
-            } else {
-                p = exp(-(s0cost - scost / T));
-                if (p < Math.random()) {
-                    s = s0;
+                    }
                 }
+                T = alpha * T;
             }
-
-
         }
 
     }
+
 
 }
 
