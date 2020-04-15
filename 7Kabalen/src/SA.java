@@ -25,9 +25,6 @@ public class SA {
         double alpha = 0.0015;
         float TStop = 230;
 
-        for (Route route : initalRoute) {
-            S = S + route.cost;
-        }
 
         while (T > TStop) {
             for (int i = 0; kmax < i; i++) {

@@ -17,6 +17,7 @@ public class Core extends PApplet {
 
     private ArrayList<Vertex> vertexArrayList;
     private ArrayList<Vehicle> vehicleList;
+    KMeans KMeans;
     private CW cw;
     private GfxComponent gfxComponent;
 
@@ -74,6 +75,7 @@ public class Core extends PApplet {
         vehicleList = new ArrayList<>();
         surface.setResizable(true);
 
+
         //setup of the data handler and generation of the solomon data.
         DataImporter datagirl = new DataImporter("SOLOMON2.csv",this); //change what data you want to look at here.
 
@@ -85,6 +87,7 @@ public class Core extends PApplet {
 
         gfxComponent = new GfxComponent(this.width, this.height, vertexArrayList, vehicleList, this);
         cw = new CW(vertexArrayList, this, vehicleList);
+        KMeans = new KMeans(vertexArrayList, 3, vertexArrayList, this, vehicleList);
 
         final float initClock;
         initClock = System.nanoTime();
@@ -103,7 +106,7 @@ public class Core extends PApplet {
 
         cw.getGfxComponent().drawCustomers();
         cw.getGfxComponent().drawRoutes(cw.getRoutes());
-
+        KMeans.gfxComponent.drawCentroids(KMeans.Centroids);
         if (run) {
             cw.stepScanner();
         }

@@ -1,6 +1,8 @@
+import javafx.scene.shape.Ellipse;
 import processing.core.PApplet;
 import processing.core.PVector;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class GfxComponent {
@@ -133,6 +135,13 @@ public class GfxComponent {
         }
     }
 
+    void drawCentroids(ArrayList<Centroid> centroids){
+        for (Centroid centroid : centroids){
+            parent.fill(255,0,0);
+            parent.ellipse(getDrawWidth((int)(centroid.position.x)), getDrawHeight((int)(centroid.position.y)), 16,16);
+        }
+
+    }
     //preset colours BRITBONG
     dumbColour[] TheseColours = {
             new dumbColour(247, 67, 67),
