@@ -14,7 +14,10 @@ public class KMeans {
         Centroids = new ArrayList<>();
         init();
         this.gfxComponent = new GfxComponent(parent.width, parent.height, vertexArrayList, vehicleArrayList, parent);
-        scanner();
+        for (int i = 0; i < 10; i++){
+            scanner();
+            merge();
+        }
     }
 
 
@@ -45,6 +48,22 @@ public class KMeans {
 
         }
     }
+    void merge(){
+        float tempx = 0;
+        float tempy = 0;
+        for (Centroid centroid: Centroids){
+            for (Vertex vertex: centroid.Cluster){
+                tempx += vertex.position.x;
+                tempy += vertex.position.y;
+            }
+            tempx = tempx/centroid.Cluster.size();
+            tempy = tempy/centroid.Cluster.size();
+            centroid.position.x = tempx;
+            centroid.position.y = tempy;
+            centroid.Cluster = new ArrayList<>();
+        }
+    }
+
 }
 
 class Centroid{
@@ -52,8 +71,7 @@ class Centroid{
     ArrayList<Vertex> Cluster;
 
     Centroid(){
-        ArrayList<Vertex> Cluster = new ArrayList<>();
-        this.Cluster = Cluster;
+        this.Cluster = new ArrayList<>();
 
     }
 }

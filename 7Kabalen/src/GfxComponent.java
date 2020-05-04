@@ -87,14 +87,14 @@ public class GfxComponent {
         if (parent.width == 0) {
             parent.width = displayWidth;
         }
-        return x * parent.width / 80; //Should be 100 but current data doesn't exceed 77
+        return x * parent.width / 100; //Should be 100 but current data doesn't exceed 77
     }
 
     public int getDrawHeight(int x) {
         if (parent.height == 0) {
             parent.height = displayHeight;
         }
-        return x * parent.height / 80;//Should be 100 but current data doesn't exceed 77
+        return x * parent.height / 100;//Should be 100 but current data doesn't exceed 77
 
     }
 
