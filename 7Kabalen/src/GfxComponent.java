@@ -1,6 +1,5 @@
 import javafx.scene.shape.Ellipse;
 import processing.core.PApplet;
-import processing.core.PVector;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -139,9 +138,20 @@ public class GfxComponent {
         for (Centroid centroid : centroids){
             parent.fill(255,0,0);
             parent.ellipse(getDrawWidth((int)(centroid.position.x)), getDrawHeight((int)(centroid.position.y)), 16,16);
-        }
+            parent.text("pos x " + centroid.position.x + " " + "pos y " + centroid.position.y, getDrawWidth(centroid.position.x) - 20, getDrawHeight((centroid.position.y) - 5));
 
+            for (Vertex vertex : centroid.Cluster) {
+                parent.stroke(255,0,0);
+                parent.line(
+                        getDrawWidth((int)(centroid.position.x)),
+                        getDrawHeight((int)(centroid.position.y)),
+                        getDrawWidth((int)(vertex.position.x)),
+                        getDrawHeight((int)(vertex.position.y))
+                );
+            }
+        }
     }
+
     //preset colours BRITBONG
     dumbColour[] TheseColours = {
             new dumbColour(247, 67, 67),

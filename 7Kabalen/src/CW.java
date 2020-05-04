@@ -106,7 +106,6 @@ public class CW {
         //init data lists
         routes = new ArrayList<>();
         savingsList = new ArrayList<>();
-        depot.isEdge = false;
 
         //make a new route for every vertex in the vertexArrayList
         for (Vertex vertex : vertexArrayList) {
@@ -140,9 +139,10 @@ public class CW {
             }
         }
         Collections.sort(savingsList);
+        System.out.println(savingsList.size());
     }
 
-    /**
+     /**
      * 3rd step of the algorithm
      */
     void scanner() {
@@ -166,12 +166,13 @@ public class CW {
 
                         //j first, i last
                         merge(routeJ, routeI, indexJ, indexI);
+
+                        //break the loop
                     }
                 }
             }
         }
     }
-
 
     void merge(final Route route1, final Route route2, final int index1, final int index2) {
         if (index1 == 1 && index2 == route2.getAssignedVertices().size() - 1) {
@@ -186,7 +187,6 @@ public class CW {
     }
 
     private int k = 0;
-
 
     void stepScanner() {
         Route sij = savingsList.get(getK());

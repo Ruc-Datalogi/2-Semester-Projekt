@@ -1,9 +1,4 @@
-import processing.core.*;
-
-import javax.swing.*;
 import java.util.ArrayList;
-import java.util.HashMap;
-
 import static processing.core.PApplet.exp;
 
 public class SA {
@@ -25,7 +20,6 @@ public class SA {
         double alpha = 0.0015;
         float TStop = 230;
 
-
         while (T > TStop) {
             for (int i = 0; kmax < i; i++) {
                 k = i;
@@ -43,10 +37,7 @@ public class SA {
                 T = alpha * T;
             }
         }
-
     }
-
-
 }
 
 

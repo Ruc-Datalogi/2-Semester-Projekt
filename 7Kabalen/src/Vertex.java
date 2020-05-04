@@ -7,7 +7,7 @@ import java.util.ArrayList;
 public class Vertex {
     PVector position;
     int st, et, d, mt;
-    float distCentroid = 100000;
+    float distCentroid = 10000000;
     private boolean isDepot;
     boolean isEdge;
 
