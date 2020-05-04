@@ -24,6 +24,8 @@ public class KMeans {
         }
     }
 
+    // generate k centroids with a random position, random position should be within the scope
+    // of the solomon data set.
     void init(){
         for (int i = 0; i<K; i++){
             float randx = (int)(Math.random() * 77);
@@ -35,11 +37,14 @@ public class KMeans {
     }
 
     void scanner(){
+        //initialize the clusters
         for (Centroid centroid : Centroids) centroid.Cluster = new ArrayList<>();
 
-        for (Vertex vertex: Vertices){
+        //For all vertices in the solomon data set.
+        for (Vertex vertex : Vertices){
             Centroid tempCentroid = new Centroid();
 
+            //Check all centroids and see which distance is best.
             for (Centroid centroid: Centroids){
                 if(vertex.distCentroid >= vertex.position.dist(centroid.position)){
                     vertex.distCentroid = vertex.position.dist(centroid.position);
@@ -47,21 +52,17 @@ public class KMeans {
                 }
             }
 
+            //add vertex to centroids' cluster.
             if (tempCentroid != null){
                 tempCentroid.Cluster.add(vertex);
             }
-
-            System.out.println(Vertices.size());
-            for (Centroid centroid : Centroids) System.out.println("Index of: " + Centroids.indexOf(centroid));
-
-            for (Centroid centroid : Centroids) System.out.println("Cluser size: " + centroid.Cluster.size());
-
-            for (Centroid centroid : Centroids) System.out.println("Array cluster: " + centroid.Cluster);
-
         }
     }
 
+    //Actually not merging, but the means part of kmeans.
     void merge(){
+        //initialize the distance from the vertex to the centroids, is used
+        //in scanner to compare which centroid is best.
         for(Vertex vertex : Vertices){
             vertex.distCentroid = 100000000;
         }
@@ -76,11 +77,11 @@ public class KMeans {
             }
 
             if (centroid.Cluster.size() != 0){
-            tempx = tempx/centroid.Cluster.size();
-            tempy = tempy/centroid.Cluster.size();
+                tempx = tempx/centroid.Cluster.size();
+                tempy = tempy/centroid.Cluster.size();
 
-            centroid.position.x = tempx;
-            centroid.position.y = tempy;
+               centroid.position.x = tempx;
+                centroid.position.y = tempy;
             }
         }
     }

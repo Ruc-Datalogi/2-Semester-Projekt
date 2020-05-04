@@ -103,7 +103,7 @@ public class Core extends PApplet {
         text("Time to Initialisation: " + timeToInit, 20, 35);
 
         cw.getGfxComponent().drawCustomers();
-        //cw.getGfxComponent().drawRoutes(cw.getRoutes());
+        cw.getGfxComponent().drawRoutes(cw.getRoutes());
         KMeans.gfxComponent.drawCentroids(KMeans.Centroids);
         if (run) {
             cw.stepScanner();
