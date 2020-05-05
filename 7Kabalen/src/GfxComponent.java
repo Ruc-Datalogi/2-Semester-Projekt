@@ -138,7 +138,7 @@ public class GfxComponent {
         for (Centroid centroid : centroids){
             parent.fill(255,0,0);
             parent.ellipse(getDrawWidth((int)(centroid.position.x)), getDrawHeight((int)(centroid.position.y)), 16,16);
-            parent.text("pos x " + centroid.position.x + " " + "pos y " + centroid.position.y, getDrawWidth(centroid.position.x) - 20, getDrawHeight((centroid.position.y) - 5));
+            parent.text("pos x " + centroid.position.x + " " + "pos y " + centroid.position.y + "C: " + centroid.remainingCapacity, getDrawWidth(centroid.position.x) - 20, getDrawHeight((centroid.position.y) - 5));
 
             for (Vertex vertex : centroid.Cluster) {
                 parent.stroke(255,0,0);

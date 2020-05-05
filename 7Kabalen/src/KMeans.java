@@ -18,9 +18,9 @@ public class KMeans {
         this.gfxComponent = new GfxComponent(parent.width, parent.height, vertexArrayList, vehicleArrayList, parent);
 
         init();
-        for (int i = 0; i < 2; i++){
+        for (int i = 0; i < 5; i++){
             scanner();
-            merge();
+            means();
         }
     }
 
@@ -36,9 +36,21 @@ public class KMeans {
         }
     }
 
+    boolean isValidSolution(){
+        int numberOfClusteredVertices=0;
+        int numberofVertices=Vertices.size();
+        for (Centroid centroid : Centroids){
+            numberOfClusteredVertices= numberOfClusteredVertices+  centroid.Cluster.size();
+        }
+        //System.out.println("Num clustered: " + numberOfClusteredVertices);
+        return numberofVertices==numberOfClusteredVertices;
+    }
     void scanner(){
         //initialize the clusters
-        for (Centroid centroid : Centroids) centroid.Cluster = new ArrayList<>();
+        for (Centroid centroid : Centroids){
+            centroid.Cluster = new ArrayList<>();
+            centroid.remainingCapacity=200;
+        }
 
         //For all vertices in the solomon data set.
         for (Vertex vertex : Vertices){
@@ -46,21 +58,24 @@ public class KMeans {
 
             //Check all centroids and see which distance is best.
             for (Centroid centroid: Centroids){
-                if(vertex.distCentroid >= vertex.position.dist(centroid.position)){
+                if(vertex.distCentroid >= vertex.position.dist(centroid.position) && centroid.remainingCapacity-vertex.d>=0){
                     vertex.distCentroid = vertex.position.dist(centroid.position);
                     tempCentroid = centroid;
+
+
                 }
             }
 
             //add vertex to centroids' cluster.
-            if (tempCentroid != null){
+            if (tempCentroid != null ){
                 tempCentroid.Cluster.add(vertex);
+                tempCentroid.remainingCapacity= tempCentroid.remainingCapacity-vertex.d;
             }
         }
     }
 
     //Actually not merging, but the means part of kmeans.
-    void merge(){
+    void means(){
         //initialize the distance from the vertex to the centroids, is used
         //in scanner to compare which centroid is best.
         for(Vertex vertex : Vertices){
@@ -68,6 +83,7 @@ public class KMeans {
         }
 
         for (Centroid centroid: Centroids){
+
             float tempx = 0;
             float tempy = 0;
 
@@ -90,8 +106,10 @@ public class KMeans {
 class Centroid{
     PVector position;
     ArrayList<Vertex> Cluster;
+    int remainingCapacity;
 
     Centroid(){
         this.Cluster = new ArrayList<>();
+        remainingCapacity=200;
     }
 }
