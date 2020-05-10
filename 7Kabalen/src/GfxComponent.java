@@ -98,7 +98,10 @@ public class GfxComponent {
     }
 
     public void drawBetweenTwoVertices(Vertex a, Vertex b) {
-        parent.line(getDrawWidth(a.position.x), getDrawHeight(a.position.y), getDrawWidth(b.position.x), getDrawHeight(b.position.y));
+        parent.line(
+                getDrawWidth(a.position.x), getDrawHeight(a.position.y),
+                getDrawWidth(b.position.x), getDrawHeight(b.position.y)
+        );
     }
 
     void drawCustomers() {
@@ -152,7 +155,7 @@ public class GfxComponent {
         }
     }
 
-    //preset colours BRITBONG
+    //preset colours
     dumbColour[] TheseColours = {
             new dumbColour(247, 67, 67),
             new dumbColour(130, 94, 35),

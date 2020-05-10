@@ -83,7 +83,6 @@ public class CW {
 
     /**
      * Initialization of the clarke-wright algorithm
-     *
      * @param vertexArrayList solomon data
      * @param parent          for drawing
      */
@@ -96,6 +95,19 @@ public class CW {
         initRoute();
         calculateSavings();
         scanner();
+
+        //results
+        float totalLength = 0;
+
+        for (Route route : routes) {
+            for (int i = 0; i < route.getAssignedVertices().size()-1; i++){
+                Vertex vertex1 = route.getAssignedVertices().get(i);
+                Vertex vertex2 = route.getAssignedVertices().get(i+1);
+
+                totalLength += vertex1.position.dist(vertex2.position);
+            }
+        }
+        System.out.println("Total length: " + totalLength);
     }
 
     /**
@@ -139,7 +151,6 @@ public class CW {
             }
         }
         Collections.sort(savingsList);
-        System.out.println(savingsList.size());
     }
 
      /**
