@@ -86,7 +86,7 @@ public class Core extends PApplet {
 
         gfxComponent = new GfxComponent(this.width, this.height, vertexArrayList, vehicleList, this);
         cw = new CW(vertexArrayList, this, vehicleList);
-        KMeans = new KMeans(vertexArrayList, 4, vertexArrayList, this, vehicleList);
+        KMeans = new KMeans(vertexArrayList, 8, vertexArrayList, this, vehicleList);
 
         final float initClock;
         initClock = System.nanoTime();
@@ -103,8 +103,9 @@ public class Core extends PApplet {
         text("Time to Initialisation: " + timeToInit, 20, 35);
 
         cw.getGfxComponent().drawCustomers();
-        cw.getGfxComponent().drawRoutes(cw.getRoutes());
+        //cw.getGfxComponent().drawRoutes(cw.getRoutes());
         KMeans.gfxComponent.drawCentroids(KMeans.Centroids);
+        //KMeans.gfxComponent.drawRoutes(KMeans.TwoOptedRoutes);
         if (run) {
             cw.stepScanner();
         }

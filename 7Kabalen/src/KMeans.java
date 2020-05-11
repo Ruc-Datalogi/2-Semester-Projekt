@@ -9,6 +9,7 @@ public class KMeans {
     int K;
     ArrayList<Vertex> Vertices;
     ArrayList<Centroid> Centroids;
+    ArrayList<Route> TwoOptedRoutes;
     GfxComponent gfxComponent;
 
     KMeans(ArrayList<Vertex> Dataset , int K, ArrayList<Vertex> vertexArrayList, PApplet parent, ArrayList<Vehicle> vehicleArrayList){
@@ -22,7 +23,11 @@ public class KMeans {
             scanner();
             means();
         }
+        //generateTwoOptRoutesFromCentroids();
+
     }
+
+
 
     // generate k centroids with a random position, random position should be within the scope
     // of the solomon data set.
@@ -33,6 +38,15 @@ public class KMeans {
             Centroid centroid = new Centroid();
             centroid.position = new PVector(randx, randy);
             Centroids.add(centroid);
+        }
+    }
+
+    void generateTwoOptRoutesFromCentroids(){
+        TwoOpt TwoOptObject = new TwoOpt();
+        for(Centroid c : Centroids){
+            if(c.Cluster.size()>0) {
+                TwoOptedRoutes.add(TwoOptObject.makeTwoOptRoute(c.Cluster));
+            }
         }
     }
 
