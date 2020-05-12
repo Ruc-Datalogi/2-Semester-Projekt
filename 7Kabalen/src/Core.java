@@ -104,8 +104,8 @@ public class Core extends PApplet {
 
         cw.getGfxComponent().drawCustomers();
         //cw.getGfxComponent().drawRoutes(cw.getRoutes());
-        KMeans.gfxComponent.drawCentroids(KMeans.Centroids);
-        //KMeans.gfxComponent.drawRoutes(KMeans.TwoOptedRoutes);
+        //KMeans.gfxComponent.drawCentroids(KMeans.Centroids);
+        KMeans.gfxComponent.drawRoutes(KMeans.TwoOptedRoutes);
         if (run) {
             cw.stepScanner();
         }

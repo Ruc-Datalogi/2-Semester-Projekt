@@ -1,4 +1,4 @@
-import javafx.scene.shape.Ellipse;
+//import javafx.scene.shape.Ellipse;
 import processing.core.PApplet;
 
 import java.lang.reflect.Array;
@@ -122,6 +122,7 @@ public class GfxComponent {
 
     void drawRoutes(ArrayList<Route> routes){
         int dumbNumber=0;
+        //System.out.println("route: "+  routes);
         for(Route route : routes){
             dumbColour myUniqueSnowflakeColour = TheseColours[dumbNumber];
             parent.stroke(myUniqueSnowflakeColour.r,myUniqueSnowflakeColour.g,myUniqueSnowflakeColour.b);

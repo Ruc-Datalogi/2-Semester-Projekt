@@ -23,7 +23,7 @@ public class KMeans {
             scanner();
             means();
         }
-        //generateTwoOptRoutesFromCentroids();
+        generateTwoOptRoutesFromCentroids();
 
     }
 
@@ -41,14 +41,20 @@ public class KMeans {
         }
     }
 
-    void generateTwoOptRoutesFromCentroids(){
-        TwoOpt TwoOptObject = new TwoOpt();
-        for(Centroid c : Centroids){
-            if(c.Cluster.size()>0) {
-                TwoOptedRoutes.add(TwoOptObject.makeTwoOptRoute(c.Cluster));
-            }
+void generateTwoOptRoutesFromCentroids(){
+    TwoOpt TwoOptObject = new TwoOpt();
+    TwoOptedRoutes = new ArrayList<Route>();
+    for(Centroid c : Centroids){
+        if(c.Cluster.size()>0) {
+            System.out.println("cluster size: " + c.Cluster.size());
+            //if(b == true) {
+                Route MyRoute = TwoOptObject.makeTwoOptRoute(c.Cluster);
+                TwoOptedRoutes.add(MyRoute);
+            //}
+
         }
     }
+}
 
     boolean isValidSolution(){
         int numberOfClusteredVertices=0;
