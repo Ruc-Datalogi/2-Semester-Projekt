@@ -79,7 +79,7 @@ public class CW {
     private Vertex depot;
 
     static final int VEHICLEAMOUNT = 25;
-    static final int ROUTECAPACITY = 100;
+    static final int ROUTECAPACITY = 10000000;
 
     /**
      * Initialization of the clarke-wright algorithm
@@ -106,7 +106,10 @@ public class CW {
 
                 totalLength += vertex1.position.dist(vertex2.position);
             }
+            System.out.println(route.getAssignedVertices());
+
         }
+
         System.out.println("Total length: " + totalLength);
     }
 
@@ -176,9 +179,9 @@ public class CW {
                         merge(routeI, routeJ, indexI, indexJ);
 
                         //j first, i last
-                        merge(routeJ, routeI, indexJ, indexI);
+                        // merge(routeJ, routeI, indexJ, indexI);
 
-                        //break the loop
+                        //TODO break the loop
                     }
                 }
             }
@@ -199,6 +202,12 @@ public class CW {
 
     private int k = 0;
 
+    void timeWindowScanner(ArrayList<Route> routes){
+        for (Route route : routes) {
+
+        }
+
+    }
     void stepScanner() {
         Route sij = savingsList.get(getK());
         Vertex i = sij.getAssignedVertices().get(0);
