@@ -106,7 +106,7 @@ public class CW {
 
                 totalLength += vertex1.position.dist(vertex2.position);
             }
-            System.out.println(route.getAssignedVertices());
+            //System.out.println(route.getAssignedVertices());
 
         }
 

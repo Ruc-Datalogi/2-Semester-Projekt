@@ -7,12 +7,15 @@ import java.util.ArrayList;
 
 public class KMeans {
     int K;
+    Vertex Depot;
     ArrayList<Vertex> Vertices;
     ArrayList<Centroid> Centroids;
     ArrayList<Route> TwoOptedRoutes;
     GfxComponent gfxComponent;
 
     KMeans(ArrayList<Vertex> Dataset , int K, ArrayList<Vertex> vertexArrayList, PApplet parent, ArrayList<Vehicle> vehicleArrayList){
+        Depot = Dataset.get(0);
+        Dataset.remove(0);
         this.Vertices = Dataset;
         this.K = K;
         Centroids = new ArrayList<>();
@@ -44,16 +47,19 @@ public class KMeans {
 void generateTwoOptRoutesFromCentroids(){
     TwoOpt TwoOptObject = new TwoOpt();
     TwoOptedRoutes = new ArrayList<Route>();
+
     for(Centroid c : Centroids){
         if(c.Cluster.size()>0) {
-            System.out.println("cluster size: " + c.Cluster.size());
+            //System.out.println("cluster size: " + c.Cluster.size());
             //if(b == true) {
+                c.Cluster.add(Depot);
                 Route MyRoute = TwoOptObject.makeTwoOptRoute(c.Cluster);
                 TwoOptedRoutes.add(MyRoute);
             //}
 
         }
     }
+
 }
 
     boolean isValidSolution(){
