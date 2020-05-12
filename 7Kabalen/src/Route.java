@@ -61,6 +61,13 @@ public class Route implements Comparable<Route> {
             cost += addedRoutes.get(i).d;
         }
     }
+    public float getLength(){
+        float totalLength=0;
+        for(int i=1;i<assignedVertices.size();i++){
+            totalLength=totalLength+assignedVertices.get(i).position.dist(assignedVertices.get(i-1).position);
+        }
+        return totalLength;
+    }
 
     @Override
     public String toString() {

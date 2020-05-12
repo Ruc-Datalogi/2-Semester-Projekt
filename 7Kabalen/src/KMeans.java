@@ -47,7 +47,7 @@ public class KMeans {
 void generateTwoOptRoutesFromCentroids(){
     TwoOpt TwoOptObject = new TwoOpt();
     TwoOptedRoutes = new ArrayList<Route>();
-
+    float allRouteLength=0;
     for(Centroid c : Centroids){
         if(c.Cluster.size()>0) {
             //System.out.println("cluster size: " + c.Cluster.size());
@@ -55,10 +55,14 @@ void generateTwoOptRoutesFromCentroids(){
                 c.Cluster.add(Depot);
                 Route MyRoute = TwoOptObject.makeTwoOptRoute(c.Cluster);
                 TwoOptedRoutes.add(MyRoute);
+                float RouteLength=MyRoute.getLength();
+                //System.out.println("Route length: " + RouteLength);
+                allRouteLength+=RouteLength;
             //}
 
         }
     }
+    System.out.println("All clustered routes routes are: " + allRouteLength + " long.");
 
 }
 
