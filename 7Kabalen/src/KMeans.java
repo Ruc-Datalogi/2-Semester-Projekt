@@ -15,8 +15,8 @@ public class KMeans {
 
     KMeans(ArrayList<Vertex> Dataset , int K, ArrayList<Vertex> vertexArrayList, PApplet parent, ArrayList<Vehicle> vehicleArrayList){
         Depot = Dataset.get(0);
-        Dataset.remove(0);
-        this.Vertices = Dataset;
+        this.Vertices = (ArrayList<Vertex>) Dataset.clone();
+        this.Vertices.remove(0);
         this.K = K;
         Centroids = new ArrayList<>();
         this.gfxComponent = new GfxComponent(parent.width, parent.height, vertexArrayList, vehicleArrayList, parent);
@@ -26,6 +26,7 @@ public class KMeans {
             scanner();
             means();
         }
+        //isValidSolution();
         generateTwoOptRoutesFromCentroids();
 
     }
@@ -47,7 +48,7 @@ public class KMeans {
 void generateTwoOptRoutesFromCentroids(){
     TwoOpt TwoOptObject = new TwoOpt();
     TwoOptedRoutes = new ArrayList<Route>();
-    float allRouteLength=0;
+
     for(Centroid c : Centroids){
         if(c.Cluster.size()>0) {
             //System.out.println("cluster size: " + c.Cluster.size());
@@ -55,16 +56,19 @@ void generateTwoOptRoutesFromCentroids(){
                 c.Cluster.add(Depot);
                 Route MyRoute = TwoOptObject.makeTwoOptRoute(c.Cluster);
                 TwoOptedRoutes.add(MyRoute);
-                float RouteLength=MyRoute.getLength();
-                //System.out.println("Route length: " + RouteLength);
-                allRouteLength+=RouteLength;
             //}
 
         }
     }
-    System.out.println("All clustered routes routes are: " + allRouteLength + " long.");
 
 }
+    float getTotalRouteLength(){
+        float allRouteLength=0;
+        for(Route r: TwoOptedRoutes){
+            allRouteLength+=r.getLength();
+        }
+        return allRouteLength;
+    }
 
     boolean isValidSolution(){
         int numberOfClusteredVertices=0;
@@ -72,7 +76,7 @@ void generateTwoOptRoutesFromCentroids(){
         for (Centroid centroid : Centroids){
             numberOfClusteredVertices= numberOfClusteredVertices+  centroid.Cluster.size();
         }
-        //System.out.println("Num clustered: " + numberOfClusteredVertices);
+        System.out.println("Num clustered: " + numberOfClusteredVertices);
         return numberofVertices==numberOfClusteredVertices;
     }
     void scanner(){
