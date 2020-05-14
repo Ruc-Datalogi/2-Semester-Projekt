@@ -13,7 +13,7 @@ public class KMeans {
     ArrayList<Route> TwoOptedRoutes;
     GfxComponent gfxComponent;
 
-    KMeans(ArrayList<Vertex> Dataset , int K, ArrayList<Vertex> vertexArrayList, PApplet parent, ArrayList<Vehicle> vehicleArrayList){
+    KMeans(ArrayList<Vertex> Dataset , int K, ArrayList<Vertex> vertexArrayList, PApplet parent, ArrayList<Vehicle> vehicleArrayList) {
         Depot = Dataset.get(0);
         this.Vertices = (ArrayList<Vertex>) Dataset.clone();
         this.Vertices.remove(0);
@@ -22,15 +22,15 @@ public class KMeans {
         this.gfxComponent = new GfxComponent(parent.width, parent.height, vertexArrayList, vehicleArrayList, parent);
 
         init();
-        for (int i = 0; i < 5; i++){
+        for (int i = 0; i < 5; i++) {
             scanner();
             means();
         }
         //isValidSolution();
         generateTwoOptRoutesFromCentroids();
-
+        BruteForce bruteForce = new BruteForce();
+        bruteForce.bruteForce(Centroids);
     }
-
 
 
     // generate k centroids with a random position, random position should be within the scope
