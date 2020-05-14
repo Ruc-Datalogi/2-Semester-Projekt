@@ -107,13 +107,13 @@ public class GfxComponent {
     void drawCustomers() {
         //Let's handle the drawing here instead of passing around the parent?
         for (Vertex custom : vertexArrayList) {
-            if (custom.isDepot()) {
+            /*if (custom.isDepot()) {
                 parent.fill(255, 0, 0);
                 parent.text("pos x " + custom.position.x + " " + "pos y " + custom.position.y, getDrawWidth(custom.position.x) - 20, getDrawHeight((custom.position.y) - 5));
             } else {
                 parent.fill(0, 255, 0);
                 parent.text("pos x " + custom.position.x + " " + "pos y " + custom.position.y, getDrawWidth(custom.position.x) - 20, getDrawHeight(custom.position.y) - 5);
-            }
+            }*/
             parent.fill(255);
             parent.ellipse(getDrawWidth((int) custom.position.x), getDrawHeight((int) custom.position.y), 8, 8); //the multiplier basically just spreads them out
             //Please figure out a way to translate the coordinates from the data to the visuals without multiplying by arbitrary values.

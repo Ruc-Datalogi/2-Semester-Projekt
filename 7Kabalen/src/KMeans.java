@@ -12,6 +12,7 @@ public class KMeans {
     ArrayList<Centroid> Centroids;
     ArrayList<Route> TwoOptedRoutes;
     GfxComponent gfxComponent;
+    BruteForce bruteForce;
 
     KMeans(ArrayList<Vertex> Dataset , int K, ArrayList<Vertex> vertexArrayList, PApplet parent, ArrayList<Vehicle> vehicleArrayList) {
         Depot = Dataset.get(0);
@@ -28,7 +29,7 @@ public class KMeans {
         }
         //isValidSolution();
         generateTwoOptRoutesFromCentroids();
-        BruteForce bruteForce = new BruteForce();
+        bruteForce = new BruteForce();
         bruteForce.bruteForce(Centroids);
     }
 
