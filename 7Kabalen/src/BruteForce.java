@@ -21,6 +21,7 @@ public class BruteForce {
                 order[centroid.Cluster.indexOf(vertex)] = centroid.Cluster.indexOf(vertex);
                 knuder.add(vertex);
             }
+            System.out.println(knuder.size());
             doForce(order, knuder.size(), knuder, bestEver);
         }
     }
@@ -29,10 +30,17 @@ public class BruteForce {
         int largestI = 1;
         Route route = new Route();
         while (largestI != -1) {
+            float fact = 1;
+            float factdivider = 0;
+            factdivider++;
+            for(int i=1;i<=n;i++){
+                fact = fact*i;
+            }
+            fact = fact/2+1;
             largestI = -1;
             // STEP 1
             for (int i = 0; i < n - 1; i++) {
-                if (order[i] < order[i + 1]) {
+                if (order[i] < order[i + 1] && factdivider < fact) {
                     largestI = i;
                 }
             }
