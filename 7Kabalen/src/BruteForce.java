@@ -8,8 +8,9 @@ import static processing.core.PApplet.reverse;
 
 public class BruteForce {
     ArrayList<Route> routes = new ArrayList<>();
-    public BruteForce() {
 
+    public BruteForce(final ArrayList<Centroid> centroids) {
+        bruteForce(centroids);
     }
 
     void bruteForce(ArrayList<Centroid> centroids) {
@@ -45,10 +46,6 @@ public class BruteForce {
                 }
             }
 
-            if (largestI == -1) {
-                System.out.println("finished & LargestI =" + largestI);
-            }
-
             if (largestI != -1) {
                 // STEP 2
                 int largestJ = -1;
@@ -74,11 +71,14 @@ public class BruteForce {
                 knuder = new ArrayList<Vertex>(Arrays.asList(temp));
                 float length = 0;
                 for (int i = 0; i < n; i++) {
+
+                    PVector vertexPosition = knuder.get(i).position;
+
                     if (i < n - 1) {
-                        length += knuder.get(i).position.dist(knuder.get(i + 1).position);
+                        length += vertexPosition.dist(knuder.get(i + 1).position);
                     }
                     if (i == n - 1) {
-                        length += knuder.get(i).position.dist(knuder.get(0).position);
+                        length += vertexPosition.dist(knuder.get(0).position);
                     }
                 }
                 if (length < best) {
