@@ -10,7 +10,7 @@ public class SA {
     double T = 100;
 
 
-    public void SA(float kmax, ArrayList<Route> initalRoute) {
+    public void SA (float kmax, ArrayList<Route> initalRoute) {
         this.kmax = kmax;
         s0 = initalRoute;
         k = 0;

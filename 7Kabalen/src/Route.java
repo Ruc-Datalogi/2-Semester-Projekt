@@ -30,6 +30,14 @@ public class Route implements Comparable<Route> {
         this.assignedVertices = assignedVertices;
     }
 
+    public void setTimeTally(float tally) {
+        this.timeTally = tally;
+    }
+
+    public float getTimeTally() {
+        return timeTally;
+    }
+
     /*
     Route should contain a unique number for identification
                 Could contain capacity
@@ -37,6 +45,7 @@ public class Route implements Comparable<Route> {
     private ArrayList<Vertex> assignedVertices;
     private float cost;
     private float savings;
+    private float timeTally;
 
     Route() {
         assignedVertices = new ArrayList<Vertex>();

@@ -112,7 +112,7 @@ public class GfxComponent {
                 parent.text("pos x " + custom.position.x + " " + "pos y " + custom.position.y, getDrawWidth(custom.position.x) - 20, getDrawHeight((custom.position.y) - 5));
             } else {
                 parent.fill(0, 255, 0);
-                parent.text("pos x " + custom.position.x + " " + "pos y " + custom.position.y, getDrawWidth(custom.position.x) - 20, getDrawHeight(custom.position.y) - 5);
+                parent.text(custom.st + " " + custom.et + " " + custom.position.x + " " + "pos y " + custom.position.y, getDrawWidth(custom.position.x) - 20, getDrawHeight(custom.position.y) - 5);
             }*/
             parent.fill(255);
             parent.ellipse(getDrawWidth((int) custom.position.x), getDrawHeight((int) custom.position.y), 8, 8); //the multiplier basically just spreads them out

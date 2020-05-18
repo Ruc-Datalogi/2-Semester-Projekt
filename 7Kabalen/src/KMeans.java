@@ -27,10 +27,10 @@ public class KMeans {
             scanner();
             means();
         }
+
         //isValidSolution();
         generateTwoOptRoutesFromCentroids();
-        bruteForce = new BruteForce();
-        bruteForce.bruteForce(Centroids);
+        bruteForce = new BruteForce(Centroids);
     }
 
 
@@ -80,6 +80,7 @@ void generateTwoOptRoutesFromCentroids(){
         System.out.println("Num clustered: " + numberOfClusteredVertices);
         return numberofVertices==numberOfClusteredVertices;
     }
+
     void scanner(){
         //initialize the clusters
         for (Centroid centroid : Centroids){
@@ -96,8 +97,6 @@ void generateTwoOptRoutesFromCentroids(){
                 if(vertex.distCentroid >= vertex.position.dist(centroid.position) && centroid.remainingCapacity-vertex.d>=0){
                     vertex.distCentroid = vertex.position.dist(centroid.position);
                     tempCentroid = centroid;
-
-
                 }
             }
 
@@ -138,7 +137,7 @@ void generateTwoOptRoutesFromCentroids(){
     }
 }
 
-class Centroid{
+class Centroid {
     PVector position;
     ArrayList<Vertex> Cluster;
     int remainingCapacity;

@@ -3,6 +3,8 @@ import processing.core.PApplet;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class CW {
@@ -77,7 +79,9 @@ public class CW {
     private GfxComponent gfxComponent;
     private PApplet daddy;
     private Vertex depot;
+    HashMap<Vertex,Route> routeIndex = new HashMap<>();
 
+    static final double WEIGHT = 0;
     static final int VEHICLEAMOUNT = 25;
     static final int ROUTECAPACITY = 200;
 
@@ -125,6 +129,9 @@ public class CW {
             route.addVertex(depot);
             route.addVertex(vertex);
             routes.add(route);
+
+            //route index saved for each vertex.
+            routeIndex.put(vertex,route);
         }
     }
 
@@ -137,10 +144,20 @@ public class CW {
         for (Vertex i : vertexArrayList) {
             for (Vertex j : vertexArrayList) {
                 if (!(i == j) && !i.isDepot() && !j.isDepot()) {
+                    //distance cost
                     float costj = depot.position.dist(j.position);
                     float costi = depot.position.dist(i.position);
                     float costij = i.position.dist(j.position);
                     float savings = costi + costj - costij;
+
+                    //time cost
+                    float timeCostI   = i.et;
+                    float timeCostJ   = j.et;
+                    float timeCostIJ  = vertexArrayList.get(0).et-(timeCostI-timeCostJ);
+                    float timeSavings = (float) (WEIGHT * timeCostIJ);
+
+                    //total
+                    savings += timeSavings;
 
                     Route tempRoute = new Route();
                     tempRoute.addVertex(i);
@@ -158,29 +175,34 @@ public class CW {
      */
     void scanner() {
         //for each savings pair in the sorted arraylist, get vertex i and j
+
         for (Route route : savingsList) {
+            System.out.println(savingsList.size());
+            System.out.println(routes.size());
+
+
             Vertex i = route.getAssignedVertices().get(0);
             Vertex j = route.getAssignedVertices().get(route.getAssignedVertices().size() - 1);
 
             //get which route i, and j are in.
-            for (Route routeI : routes) {
-                for (Route routeJ : routes) {
-                    if (!(routeI == routeJ) && routeI.getAssignedVertices().contains(i) && routeJ.getAssignedVertices().contains(j)) {
-                        //check if i and j are in the same route
+            Route routeI = routeIndex.get(i);
+            Route routeJ = routeIndex.get(j);
 
-                        //check if i and j are edge vertices
-                        //i first in order j last
 
-                        int indexI = routeI.getAssignedVertices().indexOf(i);
-                        int indexJ = routeJ.getAssignedVertices().indexOf(j);
-                        merge(routeI, routeJ, indexI, indexJ);
+            if (!(routeI == routeJ) && routeI.getAssignedVertices().contains(i) && routeJ.getAssignedVertices().contains(j)) {
+                //check if i and j are in the same route
 
-                        //j first, i last
-                        // merge(routeJ, routeI, indexJ, indexI);
+                //check if i and j are edge vertices
+                //i first in order j last
 
-                        //TODO break the loop
-                    }
-                }
+                int indexI = routeI.getAssignedVertices().indexOf(i);
+                int indexJ = routeJ.getAssignedVertices().indexOf(j);
+                merge(routeI, routeJ, indexI, indexJ);
+
+                //j first, i last
+                merge(routeJ, routeI, indexJ, indexI);
+
+                //TODO break the loop
             }
         }
     }
@@ -192,19 +214,19 @@ public class CW {
                 tempRouteI.remove(depot);
                 route2.addAllVertices(tempRouteI);
                 route2.getAssignedVertices().addAll(tempRouteI);
+                System.out.println(routes.indexOf(route1));
+                System.out.println(route1.getAssignedVertices());
                 routes.get(routes.indexOf(route1)).setAssignedVertices(new ArrayList<>());
+
+                for (Vertex vertex : route2.getAssignedVertices()) {
+                    routeIndex.put(vertex, route2);
+                }
             }
         }
     }
 
     private int k = 0;
 
-    void timeWindowScanner(ArrayList<Route> routes){
-        for (Route route : routes) {
-
-        }
-
-    }
     void stepScanner() {
         Route sij = savingsList.get(getK());
         Vertex i = sij.getAssignedVertices().get(0);
