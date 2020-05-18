@@ -177,10 +177,6 @@ public class CW {
         //for each savings pair in the sorted arraylist, get vertex i and j
 
         for (Route route : savingsList) {
-            System.out.println(savingsList.size());
-            System.out.println(routes.size());
-
-
             Vertex i = route.getAssignedVertices().get(0);
             Vertex j = route.getAssignedVertices().get(route.getAssignedVertices().size() - 1);
 
@@ -188,8 +184,7 @@ public class CW {
             Route routeI = routeIndex.get(i);
             Route routeJ = routeIndex.get(j);
 
-
-            if (!(routeI == routeJ) && routeI.getAssignedVertices().contains(i) && routeJ.getAssignedVertices().contains(j)) {
+            if (!(routeI == routeJ)) {
                 //check if i and j are in the same route
 
                 //check if i and j are edge vertices
@@ -200,7 +195,7 @@ public class CW {
                 merge(routeI, routeJ, indexI, indexJ);
 
                 //j first, i last
-                merge(routeJ, routeI, indexJ, indexI);
+                //merge(routeJ, routeI, indexJ, indexI);
 
                 //TODO break the loop
             }
@@ -214,10 +209,8 @@ public class CW {
                 tempRouteI.remove(depot);
                 route2.addAllVertices(tempRouteI);
                 route2.getAssignedVertices().addAll(tempRouteI);
-                System.out.println(routes.indexOf(route1));
-                System.out.println(route1.getAssignedVertices());
                 routes.get(routes.indexOf(route1)).setAssignedVertices(new ArrayList<>());
-
+                                  
                 for (Vertex vertex : route2.getAssignedVertices()) {
                     routeIndex.put(vertex, route2);
                 }
