@@ -76,7 +76,7 @@ public class Core extends PApplet {
         surface.setResizable(true);
 
         //setup of the data handler and generation of the solomon data.
-        DataImporter datagirl = new DataImporter("SOLOMON2.csv",this); //change what data you want to look at here.
+        DataImporter datagirl = new DataImporter("SOLOMON1C.csv",this); //change what data you want to look at here.
 
         try {
             vertexArrayList = datagirl.generateVertice();
@@ -86,7 +86,7 @@ public class Core extends PApplet {
 
         gfxComponent = new GfxComponent(this.width, this.height, vertexArrayList, vehicleList, this);
         cw = new CW(vertexArrayList, this, vehicleList);
-        KMeans = new KMeans(vertexArrayList, 10, vertexArrayList, this, vehicleList);
+        //KMeans = new KMeans(vertexArrayList, 20, vertexArrayList, this, vehicleList);
         final float initClock;
         initClock = System.nanoTime();
         timeToInit = (float) ((initClock - initClock2) * Math.pow(10, -9));
@@ -102,9 +102,10 @@ public class Core extends PApplet {
         text("Time to Initialisation: " + timeToInit, 20, 35);
 
         cw.getGfxComponent().drawCustomers();
-        //cw.getGfxComponent().drawRoutes(cw.getRoutes());
+        cw.getGfxComponent().drawRoutes(cw.getRoutes());
         //KMeans.gfxComponent.drawCentroids(KMeans.Centroids);
-        KMeans.gfxComponent.drawRoutes(KMeans.TwoOptedRoutes);
+        //KMeans.gfxComponent.drawRoutes(KMeans.TwoOptedRoutes);
+        //KMeans.gfxComponent.drawRoutes(KMeans.bruteForce.routes);
         if (run) {
             cw.stepScanner();
         }

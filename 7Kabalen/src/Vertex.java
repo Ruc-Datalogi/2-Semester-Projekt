@@ -5,11 +5,20 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class Vertex {
+    public PVector getPosition() {
+        return position;
+    }
+
+    public void setPosition(PVector position) {
+        this.position = position;
+    }
+
     PVector position;
     int st, et, d, mt;
     float distCentroid = 10000000;
     private boolean isDepot;
     boolean isEdge;
+    int routeIndex;
 
     /**
      *
@@ -34,6 +43,4 @@ public class Vertex {
     void setDepot(){
         isDepot = true;
     }
-
-
 }
