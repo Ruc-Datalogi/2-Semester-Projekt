@@ -26,10 +26,9 @@ public class KMeans {
             scanner();
             means();
         }
-        //isValidSolution();
         generateTwoOptRoutesFromCentroids();
-        BruteForce bruteForce = new BruteForce();
-        bruteForce.bruteForce(Centroids);
+        //BruteForce bruteForce = new BruteForce();
+        //bruteForce.bruteForce(Centroids);
     }
 
 
@@ -70,20 +69,19 @@ void generateTwoOptRoutesFromCentroids(){
         return allRouteLength;
     }
 
-    boolean isValidSolution(){
+    public boolean isValidSolution(){
         int numberOfClusteredVertices=0;
         int numberofVertices=Vertices.size();
         for (Centroid centroid : Centroids){
-            numberOfClusteredVertices= numberOfClusteredVertices+  centroid.Cluster.size();
+            numberOfClusteredVertices= numberOfClusteredVertices+  (centroid.Cluster.size()-1);
         }
-        System.out.println("Num clustered: " + numberOfClusteredVertices);
         return numberofVertices==numberOfClusteredVertices;
     }
     void scanner(){
         //initialize the clusters
         for (Centroid centroid : Centroids){
             centroid.Cluster = new ArrayList<>();
-            centroid.remainingCapacity=200;
+            centroid.remainingCapacity=100;
         }
 
         //For all vertices in the solomon data set.
@@ -144,6 +142,6 @@ class Centroid{
 
     Centroid(){
         this.Cluster = new ArrayList<>();
-        remainingCapacity=200;
+        remainingCapacity=100;
     }
 }

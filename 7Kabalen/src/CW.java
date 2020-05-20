@@ -79,7 +79,7 @@ public class CW {
     private Vertex depot;
 
     static final int VEHICLEAMOUNT = 25;
-    static final int ROUTECAPACITY = 200;
+    static final int ROUTECAPACITY = 100;
 
     /**
      * Initialization of the clarke-wright algorithm
@@ -98,16 +98,17 @@ public class CW {
 
         //results
         float totalLength = 0;
-
+        int numRoutes=0;
         for (Route route : routes) {
             if(route.getAssignedVertices().size()>0) {
                 totalLength += route.getLength();
+                numRoutes++;
             }
             //System.out.println(route.getAssignedVertices());
 
         }
 
-        System.out.println("C&W total length: " + totalLength);
+        System.out.println("C&W total length: " + totalLength + " with " + numRoutes + " routes.");
     }
 
     /**

@@ -62,6 +62,10 @@ public class Route implements Comparable<Route> {
         }
     }
     public float getLength(){
+        if(assignedVertices.size()<2){
+            //Can't calculate distance between 1 or less points.
+            return 0;
+        }
         float totalLength=0;
         for(int i=1;i<assignedVertices.size();i++){
             totalLength=totalLength+assignedVertices.get(i).position.dist(assignedVertices.get(i-1).position);
