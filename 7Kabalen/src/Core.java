@@ -18,6 +18,7 @@ public class Core extends PApplet {
     private ArrayList<Vertex> vertexArrayList;
     private ArrayList<Vehicle> vehicleList;
     KMeans KMeans;
+    ArrayList<Route> bestKMeansRoute;
     private CW cw;
     private GfxComponent gfxComponent;
 
@@ -76,7 +77,7 @@ public class Core extends PApplet {
         surface.setResizable(true);
 
         //setup of the data handler and generation of the solomon data.
-        DataImporter datagirl = new DataImporter("SOLOMON1C.csv",this); //change what data you want to look at here.
+        DataImporter datagirl = new DataImporter("CVRP-A-N80-k-10.csv",this); //change what data you want to look at here.
 
         try {
             vertexArrayList = datagirl.generateVertice();
@@ -85,11 +86,68 @@ public class Core extends PApplet {
         }
 
         gfxComponent = new GfxComponent(this.width, this.height, vertexArrayList, vehicleList, this);
+        final float initClockCW1 = System.nanoTime();
         cw = new CW(vertexArrayList, this, vehicleList);
-        //KMeans = new KMeans(vertexArrayList, 20, vertexArrayList, this, vehicleList);
+        final float initClockCW2 = System.nanoTime();
+
+        KMeans = new KMeans(vertexArrayList, 10, vertexArrayList, this, vehicleList);
+
+        System.out.println("CW time: " + (initClockCW2 - initClockCW1) * Math.pow(10, -9) );
+
+        float shortestDist=100000;
+        float longestDist=0;
+        //ArrayList<Vertex> sortedVertexList = (ArrayList<Vertex>) vertexArrayList.clone();
+        //sortedVertexList.remove(0);
+        ArrayList<Double> allValidRouteLengths = new ArrayList<Double>();
+        final float initClockKM1 = System.nanoTime();
+        for(int i=0;i<50000;i++){
+            KMeans = new KMeans(vertexArrayList, 10, vertexArrayList, this, vehicleList);
+
+
+            if(KMeans.isValidSolution()) {
+
+                float RouteLength=KMeans.getTotalRouteLength();
+                allValidRouteLengths.add((double) RouteLength);
+                //System.out.println("KMeans length: " + RouteLength);
+                if(longestDist<RouteLength){
+                    longestDist=RouteLength;
+                }
+                if(shortestDist>RouteLength){
+                    bestKMeansRoute= (ArrayList<Route>) KMeans.TwoOptedRoutes.clone();
+                    shortestDist=RouteLength;
+
+                }
+            }
+
+        }
+        final float initClockKM2 = System.nanoTime();
+        System.out.println("KM time " + (initClockKM2 - initClockKM1) * Math.pow(10, -9) );
+        double[] allValid = new double[allValidRouteLengths.size()];
+        for (int i =0; i < allValidRouteLengths.size(); i++) {
+            allValid[i] = allValidRouteLengths.get(i);
+        }
+        double[] stdData = calculateStandardVariation(allValid);
+        System.out.println("Std: " + stdData[0] + " mean:" + stdData[1] + "all valid: "  + allValidRouteLengths.size());
+        System.out.println("Best Dist: " + shortestDist + ". Worst Dist: " + longestDist);
         final float initClock;
         initClock = System.nanoTime();
         timeToInit = (float) ((initClock - initClock2) * Math.pow(10, -9));
+    }
+    double[] calculateStandardVariation(double numArray[]){
+        double sum = 0.0, standardDeviation = 0.0;
+        int length = numArray.length;
+
+        for(double num : numArray) {
+            sum += num;
+        }
+
+        double mean = sum/length;
+
+        for(double num: numArray) {
+            standardDeviation += Math.pow(num - mean, 2);
+        }
+
+        return new double[] {Math.sqrt(standardDeviation/length),mean};
     }
 
     float timeToInit;
@@ -98,14 +156,13 @@ public class Core extends PApplet {
         background(0);
 
         fill(0, 255, 0);
-        text(frameRate, 20, 20);
-        text("Time to Initialisation: " + timeToInit, 20, 35);
+        //text(frameRate, 20, 20);
+        //text("Time to Initialisation: " + timeToInit, 20, 35);
 
         cw.getGfxComponent().drawCustomers();
-        cw.getGfxComponent().drawRoutes(cw.getRoutes());
+        //cw.getGfxComponent().drawRoutes(cw.getRoutes());
         //KMeans.gfxComponent.drawCentroids(KMeans.Centroids);
-        //KMeans.gfxComponent.drawRoutes(KMeans.TwoOptedRoutes);
-        //KMeans.gfxComponent.drawRoutes(KMeans.bruteForce.routes);
+        KMeans.gfxComponent.drawRoutes(bestKMeansRoute);
         if (run) {
             cw.stepScanner();
         }
