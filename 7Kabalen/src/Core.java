@@ -1,6 +1,7 @@
 
 import processing.core.PApplet;
 import java.util.ArrayList;
+import java.util.Comparator;
 
 public class Core extends PApplet {
     /*
@@ -89,19 +90,19 @@ public class Core extends PApplet {
         final float initClockCW1 = System.nanoTime();
         cw = new CW(vertexArrayList, this, vehicleList);
         final float initClockCW2 = System.nanoTime();
-
-        KMeans = new KMeans(vertexArrayList, 10, vertexArrayList, this, vehicleList);
-
         System.out.println("CW time: " + (initClockCW2 - initClockCW1) * Math.pow(10, -9) );
 
         float shortestDist=100000;
         float longestDist=0;
-        //ArrayList<Vertex> sortedVertexList = (ArrayList<Vertex>) vertexArrayList.clone();
-        //sortedVertexList.remove(0);
+        ArrayList<Vertex> sortedVertexList = (ArrayList<Vertex>) vertexArrayList.clone();
+        sortedVertexList.remove(0); //removing depot from list and re-adding it later
+        Comparator<Vertex> vertexComparator=Comparator.comparing(e -> e.d); //Comparing demand of each vertex
+        sortedVertexList.sort(vertexComparator.reversed()); // sorting based on demand in reverse order so highest demand is first in list
+        sortedVertexList.add(0,vertexArrayList.get(0)); // re-adding depot as first index in list.
         ArrayList<Double> allValidRouteLengths = new ArrayList<Double>();
         final float initClockKM1 = System.nanoTime();
         for(int i=0;i<50000;i++){
-            KMeans = new KMeans(vertexArrayList, 10, vertexArrayList, this, vehicleList);
+            KMeans = new KMeans(sortedVertexList, 10, vertexArrayList, this, vehicleList);
 
 
             if(KMeans.isValidSolution()) {
@@ -121,7 +122,7 @@ public class Core extends PApplet {
 
         }
         final float initClockKM2 = System.nanoTime();
-        System.out.println("KM time " + (initClockKM2 - initClockKM1) * Math.pow(10, -9) );
+        System.out.println("KM time " + (initClockKM2 - initClockKM1)*1/50000 * Math.pow(10, -9) );
         double[] allValid = new double[allValidRouteLengths.size()];
         for (int i =0; i < allValidRouteLengths.size(); i++) {
             allValid[i] = allValidRouteLengths.get(i);

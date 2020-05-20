@@ -36,6 +36,11 @@ public class Vertex {
         this.st  = st;
     }
 
+    @Override
+    public String toString() {
+        return position.toString() + "d: " + this.d;
+    }
+
     boolean isDepot(){
         return this.isDepot;
     }
