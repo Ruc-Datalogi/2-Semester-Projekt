@@ -103,6 +103,7 @@ void generateTwoOptRoutesFromCentroids(){
                 tempCentroid.Cluster.add(vertex);
                 tempCentroid.remainingCapacity= tempCentroid.remainingCapacity-vertex.d;
             }
+            vertex.distCentroid = 100000000;
         }
     }
 
@@ -110,10 +111,7 @@ void generateTwoOptRoutesFromCentroids(){
     void means(){
         //initialize the distance from the vertex to the centroids, is used
         //in scanner to compare which centroid is best.
-        for(Vertex vertex : Vertices){
-            vertex.distCentroid = 100000000;
-        }
-
+        
         for (Centroid centroid: Centroids){
 
             float tempx = 0;
