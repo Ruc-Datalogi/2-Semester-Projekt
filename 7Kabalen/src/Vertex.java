@@ -17,9 +17,7 @@ public class Vertex {
     int st, et, d, mt;
     float distCentroid = 10000000;
     private boolean isDepot;
-    boolean isEdge;
-    int routeIndex;
-
+    
     /**
      *
      * @param xy Position as a vector
